@@ -20,6 +20,13 @@ style.textContent=`
 #dp-chat-panel .dp-form button{height:42px!important;background:#d4af37!important;color:#101a27!important;border:0!important;border-radius:10px!important;padding:0 16px!important;font-weight:700!important;cursor:pointer!important}
 #dp-chat-panel .dp-note{grid-row:4!important;font-size:10px!important;color:#9eacba!important;padding:6px 14px 9px!important;background:#111f30!important}
 @media(max-width:600px){#dp-chat-panel{right:10px!important;bottom:82px!important;width:calc(100vw - 20px)!important;height:min(590px,calc(100dvh - 100px))!important}#dp-chat-launcher{right:16px!important;bottom:16px!important}}
+/* Reset global site section spacing so the chat chrome anchors to the panel edges. */
+#dp-chat-panel{box-sizing:border-box!important;margin:0!important;padding:0!important;min-height:0!important;align-content:stretch!important;grid-template-rows:76px minmax(0,1fr) 62px 34px!important}
+#dp-chat-panel>.dp-head{position:relative!important;top:0!important;flex:none!important;margin:0!important}
+#dp-chat-panel>.dp-log{margin:0!important}
+#dp-chat-panel>.dp-form{position:relative!important;bottom:0!important;margin:0!important;align-self:end!important}
+#dp-chat-panel>.dp-note{margin:0!important;align-self:stretch!important}
+
 `;
 document.head.append(style);
 const mk=()=>Math.random().toString(36).slice(2)+Date.now().toString(36);
