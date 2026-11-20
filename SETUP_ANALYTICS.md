@@ -35,3 +35,16 @@ The analytics store anonymous visitor/session IDs, page path, referrer text and 
 
 ## 6. Current scope and hardening
 The chatbot is rule-based FAQ guidance, not a generative AI assistant. The admin portal currently provides overview analytics and conversation history. Before a high-traffic production launch, add durable login rate-limiting, admin account management/MFA, configurable retention jobs, audit logging and role-based permissions.
+
+
+## Enquiry capture upgrade
+
+After deploying the admin analytics upgrade, run the additional migration in the Neon SQL Editor:
+
+1. Open `database/enquiries.sql` in this repository.
+2. Copy and execute the complete SQL in the same Neon project, branch and database used by Vercel's `DATABASE_URL`.
+3. Refresh the admin overview. The Lead Enquiries table and visitor-to-lead metric will then be available.
+
+The public website enquiry form stores the submitted phone number, destination and service in `dp_enquiries`, then continues to WhatsApp as before. Treat this information as personal data: restrict admin access and establish a retention/deletion policy. The analytics export contains enquiry contact details, so store downloaded CSV files securely.
+
+The admin overview supports Today, 7 days, 30 days and custom date ranges, line and bar charts, chat-topic share, enquiry metrics and CSV export. The Conversations page continues to show recent chatbot messages.
