@@ -98,6 +98,57 @@ footer p,footer li,footer a{color:#D1D8D1}
 .inquiry-form input:focus,.inquiry-form select:focus,.track-form input:focus{outline:2px solid var(--gold);outline-offset:2px}
 @media(max-width:680px){.hero-visual{min-height:360px}.services-grid{grid-template-columns:1fr}.service:first-child{min-height:260px}.service{min-height:220px}}
 
+
+/* Cinematic charcoal + antique gold identity */
+:root{--night:#080f0c;--night-soft:#101b15;--gold:#d6a85f;--gold-pale:#f0d49e;--paper:#f6efe3}
+header{background:rgba(7,14,10,.94);border-bottom:1px solid rgba(214,168,95,.2);color:#f6efe3}
+.brand,.links,.links a,.nav-trigger{color:#f6efe3}
+.brand img{border:1px solid rgba(214,168,95,.45)}
+.nav-cta,.btn{background:linear-gradient(110deg,#e4bd78,#c8954d);border-color:#d6a85f;color:#11170f}
+.nav-cta:hover,.btn:hover{background:#f0d49e;border-color:#f0d49e;color:#11170f}
+.menu{color:#f0d49e;border-color:rgba(214,168,95,.35)}
+.mega{background:#101b15;border-color:rgba(214,168,95,.35)}
+.hero-cinematic{position:relative;isolation:isolate;overflow:hidden;padding:30px 0 0;min-height:650px;background:radial-gradient(ellipse at 73% 48%,#1b2a20 0%,#0d1711 40%,#070d0a 78%);color:#f6efe3}
+.hero-cinematic:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.13;background-image:linear-gradient(rgba(214,168,95,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(214,168,95,.08) 1px,transparent 1px);background-size:80px 80px;mask-image:linear-gradient(90deg,transparent,#000 65%)}
+.cinematic-wrap{min-height:620px;display:grid;grid-template-columns:.92fr 1.08fr;align-items:center;gap:20px}
+.cinematic-copy{padding:40px 0 72px;position:relative;z-index:3}
+.cinematic-copy .eyebrow{color:#e4bd78;letter-spacing:.2em;margin-bottom:22px}
+.cinematic-copy .eyebrow span{padding:0 8px;color:#98713e}
+.cinematic-copy h1{font-size:clamp(4.1rem,7.2vw,7.2rem);line-height:.91;color:#f7f0e5;letter-spacing:-.04em}
+.cinematic-copy h1 em{color:#d9aa62}
+.cinematic-copy>p{color:#ded5c7;max-width:470px;font:italic 1.35rem/1.35 var(--serif);margin:24px 0 28px}
+.cinematic-copy .btn{padding:15px 25px;border-radius:40px}
+.cinematic-link{align-self:center;color:#f6efe3;border-bottom:1px solid #c99a58;padding:8px 0;font:500 1.1rem var(--serif)}
+.cinematic-link span{color:#e4bd78;margin-left:8px}
+.cinematic-copy .hero-note{color:#b8a88f;margin-top:42px}
+.cinematic-stage{height:600px;position:relative;display:grid;place-items:center;overflow:visible}
+.globe-wrap{position:relative;width:min(100%,510px);aspect-ratio:1;z-index:1;filter:drop-shadow(0 0 35px rgba(201,154,88,.13))}
+.globe-art{width:100%;height:100%;overflow:visible}
+.globe-grid{transform-origin:250px 250px;animation:globeTurn 24s linear infinite}
+.globe-land{transform-origin:250px 250px;animation:landTurn 24s linear infinite}
+@keyframes globeTurn{0%{transform:rotateY(0deg) rotateZ(-3deg)}50%{transform:rotateY(180deg) rotateZ(0deg)}100%{transform:rotateY(360deg) rotateZ(3deg)}}
+@keyframes landTurn{0%{transform:translateX(0) scaleX(1)}50%{transform:translateX(-9px) scaleX(.94)}100%{transform:translateX(0) scaleX(1)}}
+.flight-orbit{position:absolute;inset:0;width:100%;height:100%;z-index:2;overflow:visible;pointer-events:none}
+.flight-path-base{fill:none;stroke:#d6a85f;stroke-width:1.4;stroke-opacity:.45;stroke-dasharray:2 10}
+.flight-path-flow{fill:none;stroke:#f0d49e;stroke-width:2;stroke-dasharray:2 15;stroke-linecap:round;animation:routeFlow 5s linear infinite}
+@keyframes routeFlow{to{stroke-dashoffset:-170}}
+.route-plane{fill:#f0d49e;transform-origin:0 0;offset-path:path("M42px 335px C110px 75px 300px 38px 430px 110px S650px 250px 590px 390px");animation:planeTravel 14s linear infinite;filter:drop-shadow(0 0 6px #d6a85f)}
+@keyframes planeTravel{0%{offset-distance:0%;transform:scale(.7) rotate(0)}100%{offset-distance:100%;transform:scale(.7) rotate(0)}}
+.compass{position:absolute;left:-35px;bottom:5px;width:158px;height:158px;color:#c99a58;z-index:3;opacity:.8}
+.compass svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1}
+.compass-n,.compass-e,.compass-s,.compass-w{position:absolute;font:500 .68rem var(--serif);color:#d6a85f}
+.compass-n{top:-8px;left:50%;transform:translateX(-50%)}.compass-e{right:-7px;top:50%}.compass-s{bottom:-8px;left:50%;transform:translateX(-50%)}.compass-w{left:-7px;top:50%}
+.compass-needle{fill:#e8c17b;stroke:#e8c17b;transform-origin:80px 80px;animation:needleNudge 7s ease-in-out infinite}
+.compass-tail{fill:#8d6333;stroke:#8d6333;transform-origin:80px 80px;animation:needleNudge 7s ease-in-out infinite}
+@keyframes needleNudge{0%,100%{transform:rotate(-4deg)}18%{transform:rotate(2deg)}38%{transform:rotate(-1deg)}62%{transform:rotate(5deg)}82%{transform:rotate(-2deg)}}
+.passport-detail{position:absolute;right:-8px;bottom:12px;width:180px;height:220px;border:1px solid rgba(214,168,95,.5);border-radius:9px 9px 3px 3px;background:linear-gradient(145deg,#1b2a20,#0b120e);box-shadow:0 20px 55px #0008;transform:rotate(-13deg);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#d6a85f;gap:12px}
+.passport-detail span{font:1.3rem var(--serif);letter-spacing:.12em}.passport-detail b{font-size:2.2rem}.passport-detail small{font-size:.55rem;letter-spacing:.22em}
+.trustbar{background:#1d3025;border-top:1px solid rgba(214,168,95,.2);border-bottom:1px solid rgba(214,168,95,.2)}
+.trust-item{border-color:rgba(214,168,95,.22)}.trust-item strong{color:#e4bd78}
+@media(max-width:980px){.cinematic-wrap{grid-template-columns:1fr 1fr}.cinematic-copy h1{font-size:clamp(3.5rem,7vw,5.5rem)}.cinematic-stage{height:500px}.passport-detail{width:140px;height:175px;right:-15px}.compass{width:125px;height:125px}}
+@media(max-width:680px){header{background:rgba(7,14,10,.97)}.links.open{background:#0d1711;border-color:rgba(214,168,95,.25)}.links.open a,.links.open .nav-trigger{color:#f6efe3}.hero-cinematic{padding:12px 0 0;min-height:0}.cinematic-wrap{grid-template-columns:1fr;gap:0;min-height:0}.cinematic-copy{padding:40px 0 0}.cinematic-copy h1{font-size:clamp(3.7rem,15vw,5.5rem)}.cinematic-copy>p{font-size:1.2rem}.cinematic-stage{height:390px;margin:0 -10px}.globe-wrap{width:min(92vw,390px)}.compass{left:0;bottom:0;width:100px;height:100px}.passport-detail{width:108px;height:145px;right:0;bottom:4px}.passport-detail span{font-size:1rem}.flight-orbit{inset:0}.trust-grid{gap:20px}}
+@media(prefers-reduced-motion:reduce){.globe-grid,.globe-land,.flight-path-flow,.route-plane,.compass-needle,.compass-tail{animation:none!important;offset-path:none!important}}
+
 </style>
 </head>
 <body>
@@ -121,19 +172,57 @@ footer p,footer li,footer a{color:#D1D8D1}
 <button class="menu" id="menu" aria-label="Open navigation" aria-expanded="false">Menu</button>
 </nav></div></header>
 <main id="top">
-<section class="hero"><div class="wrap hero-grid">
-<div class="hero-copy"><div class="eyebrow">The art of going places · Since 2004</div><h1>The world is closer <em>than you think.</em></h1><p>From your first visa checklist to your next international journey, we make every step simpler, clearer and more personal.</p><div class="actions"><a class="btn" href="#inquiry">Plan your journey <span class="arrow">↗</span></a><a class="btn light" href="#services">Explore our services</a></div><div class="hero-note">Trusted since 2004 · 22 years of expertise</div></div>
-<div class="hero-visual hero-carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Featured travel destinations">
-<div class="hero-slides">
-<figure class="hero-slide is-active"><img class="hero-photo" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85" alt="Mountain lake and alpine destination at golden hour"><figcaption class="photo-caption">A world of possibility<strong>Your next chapter awaits.</strong></figcaption></figure>
-<figure class="hero-slide"><img class="hero-photo" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=85" alt="Dubai skyline at twilight"><figcaption class="photo-caption">Beyond the familiar<strong>Find your own horizon.</strong></figcaption></figure>
-<figure class="hero-slide"><img class="hero-photo" src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1400&q=85" alt="London city skyline and landmark architecture"><figcaption class="photo-caption">A new chapter<strong>Make the world yours.</strong></figcaption></figure>
-</div>
-<div class="hero-carousel-controls"><button type="button" class="hero-arrow prev" aria-label="Previous destination">←</button><div class="hero-dots" role="group" aria-label="Choose featured image"><button type="button" aria-label="Show image 1" aria-pressed="true"></button><button type="button" aria-label="Show image 2" aria-pressed="false"></button><button type="button" aria-label="Show image 3" aria-pressed="false"></button></div><button type="button" class="hero-arrow next" aria-label="Next destination">→</button></div>
-<div class="floating-stamp"><span>Trusted travel desk<b>22+</b>Years of journeys</span></div>
-
-</div>
-</div></section>
+<section class="hero hero-cinematic" aria-label="DP Travel introduction">
+  <div class="wrap cinematic-wrap">
+    <div class="hero-copy cinematic-copy">
+      <div class="eyebrow">Established 2004 <span>·</span> 22+ years of expertise</div>
+      <h1>The world,<br>within your <em>reach.</em></h1>
+      <p>Thoughtful travel planning. Seamless visa assistance. Journeys made with confidence.</p>
+      <div class="actions">
+        <a class="btn" href="#inquiry">Plan your journey <span class="arrow">→</span></a>
+        <a class="cinematic-link" href="#stamps">Explore destinations <span>↗</span></a>
+      </div>
+      <div class="hero-note">Travel · Visa · Documentation</div>
+    </div>
+    <div class="cinematic-stage" aria-label="Animated globe, flight route and compass illustration">
+      <svg class="flight-orbit" viewBox="0 0 720 560" role="img" aria-hidden="true">
+        <defs><path id="flightPath" d="M42 335 C110 75 300 38 430 110 S650 250 590 390"/></defs>
+        <use href="#flightPath" class="flight-path-base"/>
+        <use href="#flightPath" class="flight-path-flow"/>
+        <g class="route-plane"><path d="M0 -13 L6 4 L22 12 L22 17 L5 12 L2 26 L-2 26 L-5 12 L-22 17 L-22 12 L-6 4 Z"/></g>
+      </svg>
+      <div class="globe-wrap">
+        <svg class="globe-art" viewBox="0 0 500 500" role="img" aria-label="A rotating golden globe">
+          <defs>
+            <radialGradient id="globeShade" cx="34%" cy="28%" r="72%"><stop offset="0" stop-color="#35483d"/><stop offset=".62" stop-color="#14221b"/><stop offset="1" stop-color="#080e0b"/></radialGradient>
+            <clipPath id="globeClip"><circle cx="250" cy="250" r="218"/></clipPath>
+            <filter id="goldGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <circle cx="250" cy="250" r="220" fill="url(#globeShade)" stroke="#c99a58" stroke-width="1.4"/>
+          <g class="globe-grid" clip-path="url(#globeClip)" fill="none" stroke="#c99a58" stroke-opacity=".72" stroke-width="1">
+            <ellipse cx="250" cy="250" rx="218" ry="62"/><ellipse cx="250" cy="250" rx="218" ry="125"/><ellipse cx="250" cy="250" rx="218" ry="180"/>
+            <ellipse cx="250" cy="250" rx="72" ry="218"/><ellipse cx="250" cy="250" rx="145" ry="218"/><path d="M32 250H468M42 170H458M42 330H458"/>
+            <path d="M250 32V468"/>
+          </g>
+          <g class="globe-land" clip-path="url(#globeClip)" fill="#c99a58" fill-opacity=".58" stroke="#e1bd80" stroke-opacity=".7" stroke-width="1.2">
+            <path d="M96 132l22-25 37-13 26 12 9 24-18 15-4 24-22 15-8 29-19 4-10-25-22-10-13-25z"/>
+            <path d="M172 232l25-17 29 12 12 28-13 34-9 40-17 36-15-13-4-37-18-30z"/>
+            <path d="M247 111l27-22 41 8 18 21 37 4 23 24-12 23-31 3-18 25-26-5-15-26-29-5-19-25z"/>
+            <path d="M291 216l29-14 28 15 12 33-17 37-19 42-22 25-18-23 8-35-17-34z"/>
+            <path d="M364 105l33-13 32 22 17 35-19 26-28-6-23-26z"/>
+          </g>
+          <circle cx="250" cy="250" r="220" fill="none" stroke="#e2bd7c" stroke-opacity=".42" stroke-width="1.5" filter="url(#goldGlow)"/>
+          <circle cx="250" cy="250" r="229" fill="none" stroke="#c99a58" stroke-opacity=".28" stroke-dasharray="2 8"/>
+        </svg>
+      </div>
+      <div class="compass" aria-hidden="true">
+        <span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w">W</span>
+        <svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="69"/><circle cx="80" cy="80" r="57"/><path class="compass-needle" d="M80 22 L91 80 L80 72 L69 80 Z"/><path class="compass-tail" d="M80 138 L69 80 L80 88 L91 80 Z"/><circle cx="80" cy="80" r="5"/></svg>
+      </div>
+      <div class="passport-detail" aria-hidden="true"><span>PASSPORT</span><b>✧</b><small>DP TRAVEL</small></div>
+    </div>
+  </div>
+</section>
 <div class="trustbar"><div class="wrap trust-grid"><div class="trust-item"><strong>22+ years</strong><span>Of experience</span></div><div class="trust-item"><strong>2004</strong><span>Established</span></div><div class="trust-item"><strong>End-to-end</strong><span>Personal support</span></div><div class="trust-item"><strong>One-to-one</strong><span>Dedicated guidance</span></div></div></div>
 <section id="services"><div class="wrap"><div class="section-head"><div><div class="eyebrow">What we do</div><h2 style="margin-top:14px">Travel, documentation<br>and everything in between.</h2></div><p>Thoughtful guidance for the details that make a journey possible. One experienced team, from the first question to the final document.</p></div>
 <div class="services-grid">
