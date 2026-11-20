@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DP Travel Solutions | Visa, Attestation & Travel Plans since 2004</title>
+<meta name="description" content="22 years of seamless visas, document attestation and curated journeys. DP Travel Solutions, established 2004.">
+<link rel="icon" href="assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0C0E0C;--surface:#151815;--surface2:#1C201C;--gold:#C3935B;--bronze:#996546;--paper:#E3E0E2;--taupe:#B4A7A3;--line:rgba(195,147,91,.28);
+--serif:"Cormorant Garamond",Georgia,serif;--sans:"Manrope",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--ink);color:var(--paper);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+h2{font-size:clamp(2rem,4.2vw,3.2rem);max-width:18ch}
+p{color:var(--taupe)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;border:1px solid var(--gold);background:linear-gradient(135deg,var(--gold),var(--bronze));color:#0C0E0C;font-weight:700;font-size:.92rem;cursor:pointer;transition:filter .2s,transform .2s}
+.btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn.ghost{background:none;color:var(--paper);border-color:var(--line)}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(12,14,12,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:28px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:1.25rem;font-weight:600;white-space:nowrap}
+.brand img{width:46px;height:46px;border-radius:50%;border:1px solid var(--gold)}
+.links{display:flex;gap:22px;margin-left:auto;font-size:.88rem;color:var(--taupe)}
+.links a:hover{color:var(--gold)}
+.wa{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:#7fd99a;border:1px solid rgba(127,217,154,.4);border-radius:999px;padding:8px 14px}
+.menu{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--paper);border-radius:8px;padding:8px 12px}
+/* hero */
+.hero{position:relative;padding:72px 0 88px;overflow:hidden}
+.topo{position:absolute;inset:0;opacity:.14;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(2.7rem,6vw,5rem)}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p.sub{margin:22px 0 28px;max-width:52ch;font-size:1.08rem}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.card{position:relative;background:linear-gradient(160deg,rgba(28,32,28,.9),rgba(16,18,16,.9));border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.card h3{font-size:1.6rem;margin-bottom:4px}
+.card p.s{font-size:.88rem;margin-bottom:18px}
+label{display:block;font-size:.8rem;color:var(--taupe);margin:12px 0 6px}
+select,input{width:100%;background:#0f120f;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--paper);font:inherit}
+select:focus,input:focus{border-color:var(--gold);outline:none}
+.card .btn{width:100%;margin-top:20px}
+.note{font-size:.75rem;margin-top:10px;text-align:center}
+.stamp-hit{position:absolute;right:-18px;top:-30px;width:112px;height:112px;border-radius:50%;border:3px double var(--gold);color:var(--gold);display:grid;place-items:center;text-align:center;font:600 .78rem/1.2 var(--serif);letter-spacing:.08em;transform:rotate(-14deg);background:rgba(12,14,12,.85);animation:thud .7s .5s cubic-bezier(.2,1.6,.4,1) both}
+.stamp-hit b{display:block;font-size:1.7rem;letter-spacing:0}
+@keyframes thud{from{opacity:0;transform:rotate(-14deg) scale(2.4)}to{opacity:1;transform:rotate(-14deg) scale(1)}}
+/* trust */
+.trust{border-block:1px solid var(--line);background:var(--surface)}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.trust div{padding:24px 20px;border-left:1px solid var(--line);font-size:.9rem;color:var(--taupe)}
+.trust div:first-child{border-left:0}
+.trust strong{display:block;font:600 1.5rem/1.2 var(--serif);color:var(--gold)}
+section{padding:96px 0}
+.head{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:44px;flex-wrap:wrap}
+.head p{max-width:44ch}
+/* services */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.svc{position:relative;padding:30px 24px 26px;background:var(--surface);border:2px dashed var(--line);border-radius:14px;transition:border-color .2s,transform .2s}
+.svc:nth-child(odd){transform:rotate(-.6deg)}.svc:nth-child(even){transform:rotate(.6deg)}
+.svc:hover{border-color:var(--gold);transform:rotate(0) translateY(-4px)}
+.svc .ico{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;color:var(--gold);margin-bottom:18px}
+.svc h3{font-size:1.45rem;margin-bottom:10px}
+.svc p{font-size:.92rem}
+.svc small{display:block;margin-top:14px;color:var(--gold);font-size:.78rem}
+/* stamps */
+.stamps{background:var(--surface)}
+.rail{display:flex;gap:22px;overflow-x:auto;padding:12px 4px 24px;scroll-snap-type:x mandatory}
+.st{flex:0 0 150px;height:150px;scroll-snap-align:start;border-radius:50%;border:3px double var(--gold);background:var(--ink);color:var(--gold);cursor:pointer;display:grid;place-content:center;text-align:center;font:600 1rem/1.15 var(--serif);transition:transform .25s,background .25s}
+.st:nth-child(3n+1){transform:rotate(-6deg)}.st:nth-child(3n+2){transform:rotate(4deg)}.st:nth-child(3n){transform:rotate(-2deg)}
+.st b{display:block;font-size:2rem;letter-spacing:.04em}
+.st small{font:500 .7rem var(--sans);color:var(--taupe)}
+.st:hover,.st[aria-pressed=true]{transform:rotate(0) scale(1.07);background:linear-gradient(135deg,var(--gold),var(--bronze));color:#0C0E0C}
+.st:hover small,.st[aria-pressed=true] small{color:#2a1d10}
+.detail{margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;padding:28px;border:1px solid var(--line);border-radius:16px;background:var(--ink)}
+.detail h3{font-size:2rem;grid-column:1/-1}
+.detail dt{font-size:.78rem;color:var(--gold);margin-bottom:4px}
+.detail dd{font-size:.95rem;color:var(--paper)}
+.fine{font-size:.78rem;margin-top:14px}
+/* story */
+.story .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.story h2{margin-bottom:24px}
+.vs{display:grid;gap:16px}
+.vs div{padding:26px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+.vs div.new{border-color:var(--gold);background:linear-gradient(160deg,#241c14,var(--surface))}
+.vs h3{font-size:1.5rem;margin-bottom:8px}
+.vs ul{padding-left:18px;color:var(--taupe);font-size:.92rem}
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;position:relative}
+.steps li{list-style:none;padding:0 24px 0 0;position:relative}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);font:600 1.4rem var(--serif);background:var(--ink);position:relative;z-index:1}
+.steps li::after{content:"";position:absolute;top:26px;left:52px;right:0;border-top:1.5px dashed var(--line)}
+.steps li:last-child::after{display:none}
+.steps h3{font-size:1.35rem;margin:18px 0 8px}
+.steps p{font-size:.92rem}
+.track{margin-top:56px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:24px 28px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.track h3{font-size:1.5rem;margin-right:auto}
+.track input{width:240px}
+/* footer */
+footer{background:var(--surface);border-top:1px solid var(--line);padding:64px 0 28px}
+.fg{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px}
+footer h4{font:600 1.2rem var(--serif);color:var(--gold);margin-bottom:12px}
+footer a,footer li,footer p{font-size:.9rem;color:var(--taupe)}
+footer ul{padding:0;list-style:none;display:grid;gap:6px}
+footer a:hover{color:var(--gold)}
+.copy{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:.82rem;color:var(--taupe)}
+@media(max-width:980px){.hero .wrap,.story .wrap{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.links,.wa{display:none}.menu{display:block}
+.links.open{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:var(--ink);padding:20px 24px;border-bottom:1px solid var(--line)}
+.trust .wrap{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr;gap:36px 0}.steps li::after{display:none}.detail{grid-template-columns:1fr}.fg{grid-template-columns:1fr 1fr}nav .btn{display:none}}
+@media(max-width:560px){.grid,.fg,.steps{grid-template-columns:1fr}.stamp-hit{right:-6px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<header><div class="wrap"><nav>
+  <a class="brand" href="#top"><img src="assets/logo.jpg" alt="DP Travel Solutions seal"><span>DP Travel Solutions</span></a>
+  <div class="links" id="links">
+    <a href="#services">Visa Services</a><a href="#services">Attestation &amp; Verification</a><a href="#services">Travel Plans</a><a href="#story">22-Year Legacy</a><a href="#track">Track Status</a>
+  </div>
+  <a class="wa" data-wa href="#" target="_blank" rel="noopener">WhatsApp us</a>
+  <a class="btn" href="#inquiry">Book Free Consultation</a>
+  <button class="menu" aria-label="Menu" aria-expanded="false" id="menu">Menu</button>
+</nav></div></header>
+
+<main id="top">
+<section class="hero" style="padding-top:72px">
+  <svg class="topo" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#C3935B" stroke-width="1" aria-hidden="true">
+    <circle cx="620" cy="300" r="60"/><circle cx="620" cy="300" r="120"/><circle cx="620" cy="300" r="190"/><circle cx="620" cy="300" r="270"/><circle cx="620" cy="300" r="360"/>
+    <path d="M620 -60V660M260 300H980M365 45l510 510M875 45L365 555"/>
+    <path d="M-20 420C120 360 200 470 330 410S520 520 640 470"/><path d="M-20 470C120 410 200 520 330 460S520 570 640 520"/>
+  </svg>
+  <div class="wrap">
+    <div>
+      <h1>22 Years of Seamless Visas &amp; Curated Journeys. <em>Now Online.</em></h1>
+      <p class="sub">Established in 2004. Trusted by thousands of travelers, professionals, and families for hassle-free visa processing, document attestation, and end-to-end travel planning.</p>
+      <div class="cta-row"><a class="btn" href="#inquiry">Book Free Consultation</a><a class="btn ghost" href="#stamps">Explore destinations</a></div>
+    </div>
+    <form class="card" id="inquiry" autocomplete="on">
+      <div class="stamp-hit" aria-hidden="true"><span>ESTD<b>2004</b></span></div>
+      <h3>Check your visa requirements</h3>
+      <p class="s">Tell us where you are going. We reply on WhatsApp with your document checklist.</p>
+      <label for="dest">Destination country</label>
+      <select id="dest" required></select>
+      <label for="svc">Visa / service type</label>
+      <select id="svc" required>
+        <option value="">Select a service</option><option>Tourist / Visit Visa</option><option>Work Visa</option><option>Business Visa</option><option>Student Visa</option><option>Document Attestation</option><option>Travel Plan (flights, hotels, insurance)</option>
+      </select>
+      <label for="ph">Phone / WhatsApp number</label>
+      <input id="ph" type="tel" inputmode="tel" placeholder="+91 98765 43210" required>
+      <button class="btn" type="submit">Check Visa Requirements</button>
+      <p class="note">Opens WhatsApp with your details filled in.</p>
+    </form>
+  </div>
+</section>
+
+<div class="trust"><div class="wrap">
+  <div><strong>Estd. 2004</strong>Two decades on the same desk</div>
+  <div><strong>22+ years</strong>Of proven expertise</div>
+  <div><strong>End to end</strong>Embassy &amp; document handling</div>
+  <div><strong>One person</strong>Dedicated personal support</div>
+</div></div>
+
+<section id="services"><div class="wrap">
+  <div class="head"><h2>Every service, a milestone unlocked.</h2><p>From the first checklist to the stamp in your passport, we handle the paperwork so you can plan the trip.</p></div>
+  <div class="grid">
+    <article class="svc"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 14l20-9-8 17-3-7z"/></svg></div><h3>Tourist &amp; Visit Visas</h3><p>Fast, accurate filing for Schengen, US, UK, UAE, Singapore and destinations worldwide.</p><small>Stamp: Explore</small></article>
+    <article class="svc"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3"/></svg></div><h3>Work, Business &amp; Student Visas</h3><p>Complete documentation, sponsorship guidance and interview preparation.</p><small>Stamp: Settle in</small></article>
+    <article class="svc"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h9l5 5v15H6z"/><path d="M9 14l2 2 4-4"/></svg></div><h3>Document Attestation &amp; Verification</h3><p>HRD, MEA, Apostille, Embassy attestation and PCC assistance.</p><small>Stamp: Verified</small></article>
+    <article class="svc"><div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></div><h3>Bespoke Travel Plans</h3><p>Custom itineraries, flight bookings, travel insurance and hotel reservations.</p><small>Stamp: Depart</small></article>
+  </div>
+</div></section>
+
+<section class="stamps" id="stamps"><div class="wrap">
+  <div class="head"><h2>Collect places. Unlock stamps.</h2><p>Tap a stamp to see typical timelines and the documents we prepare first.</p></div>
+  <div class="rail" id="rail" role="group" aria-label="Destinations"></div>
+  <div class="detail" id="detail" aria-live="polite"></div>
+  <p class="fine">Timelines are indicative and depend on the embassy, season and your profile. We confirm the current picture at your consultation.</p>
+</div></section>
+
+<section class="story" id="story"><div class="wrap">
+  <div>
+    <h2>Since 2004, a name you could call.</h2>
+    <p style="margin-bottom:16px">For two decades, families and professionals walked into our office and left knowing exactly where their file stood. That accountability is not changing.</p>
+    <p>What is new is convenience. You can now start your file, share your destination and track progress without queueing, with the same people behind it.</p>
+  </div>
+  <div class="vs">
+    <div><h3>Offline, since 2004</h3><ul><li>Personal accountability on every file</li><li>Embassy and document handling in person</li><li>Relationships built over 22 years</li></ul></div>
+    <div class="new"><h3>Now online</h3><ul><li>Zero guesswork: a checklist made for you</li><li>Document safety from first copy to final stamp</li><li>Transparent tracking, on WhatsApp or the web</li></ul></div>
+  </div>
+</div></section>
+
+<section id="process"><div class="wrap">
+  <div class="head"><h2>Four steps from plan to boarding pass.</h2></div>
+  <ol class="steps" style="padding:0">
+    <li><h3>Share destination &amp; goal</h3><p>Tell us where, why and when you want to travel.</p></li>
+    <li><h3>Personalized checklist</h3><p>You get a document list matched to your profile.</p></li>
+    <li><h3>Expert filing &amp; embassy coordination</h3><p>We check, file and follow up on your behalf.</p></li>
+    <li><h3>Visa approved, ready to fly</h3><p>Collect your passport and head for the airport.</p></li>
+  </ol>
+  <form class="track" id="track">
+    <h3>Track your file</h3>
+    <label for="ref" style="margin:0" class="sr">Reference number</label>
+    <input id="ref" placeholder="Reference number or phone" required>
+    <button class="btn" type="submit">Track Status</button>
+  </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fg">
+    <div><a class="brand" href="#top"><img src="assets/logo.jpg" alt="" style="width:52px;height:52px"><span>DP Travel Solutions</span></a><p style="margin-top:14px">Visa services, attestation and travel plans. Estd. 2004.</p></div>
+    <div><h4>Services</h4><ul><li><a href="#services">Tourist &amp; Visit Visas</a></li><li><a href="#services">Work, Business &amp; Student</a></li><li><a href="#services">Attestation</a></li><li><a href="#services">Travel Plans</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li><a data-tel href="#">Phone: <span data-phone></span></a></li><li><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a></li><li><a data-mail href="#"><span data-email></span></a></li></ul></div>
+    <div><h4>Visit us</h4><ul><li data-address></li><li data-hours></li></ul></div>
+  </div>
+  <p class="copy">© 2026 DP Travel Solutions | Estd. 2004</p>
+</div></footer>
+
+<script>
+/* EDIT HERE: real business details */
+const CFG={whatsapp:"910000000000",phone:"+91 00000 00000",email:"hello@example.com",address:"Office address, City, India",hours:"Mon–Sat, 10:00 am – 7:00 pm"};
+const D=[
+ {c:"SCH",n:"Schengen",t:"About 15 working days",d:"Appointment, travel insurance, flight and stay plan, bank statements",s:"Confirmed travel plan and 6 months of bank proof"},
+ {c:"USA",n:"United States",t:"Depends on interview slot",d:"DS-160, fee payment, interview appointment, financial and ties documents",s:"Interview preparation is part of the service"},
+ {c:"UK",n:"United Kingdom",t:"About 3 weeks",d:"Online application, biometrics, funds proof, travel history",s:"Clear purpose and consistent financial records"},
+ {c:"UAE",n:"UAE",t:"3 to 5 working days",d:"Passport copy, photo, return ticket, hotel or host details",s:"Passport valid for at least 6 months"},
+ {c:"SGP",n:"Singapore",t:"3 to 5 working days",d:"Application form, photo, itinerary, funds proof",s:"Complete itinerary avoids rework"},
+ {c:"CAN",n:"Canada",t:"Several weeks",d:"Biometrics, purpose letter, funds proof, travel history",s:"Strong ties to home country"}
+];
+const $=s=>document.querySelector(s);
+const wa=t=>`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(t)}`;
+$("#dest").innerHTML='<option value="">Select a country</option>'+D.map(x=>`<option>${x.n}</option>`).join("")+"<option>Other country</option>";
+$("#rail").innerHTML=D.map((x,i)=>`<button class="st" data-i="${i}" aria-pressed="false"><span><b>${x.c}</b>${x.n}<br><small>Visa stamp</small></span></button>`).join("");
+function show(i){const x=D[i];document.querySelectorAll(".st").forEach((b,j)=>b.setAttribute("aria-pressed",i===j));
+ $("#detail").innerHTML=`<h3>${x.n}</h3><dl><dt>Typical timeline</dt><dd>${x.t}</dd></dl><dl><dt>Key documents</dt><dd>${x.d}</dd></dl><dl><dt>What helps most</dt><dd>${x.s}</dd></dl>`}
+document.querySelectorAll(".st").forEach(b=>{b.onclick=()=>show(+b.dataset.i);b.onmouseenter=()=>show(+b.dataset.i)});show(0);
+$("#inquiry").onsubmit=e=>{e.preventDefault();const g=s=>$(s).value;
+ window.open(wa(`Hello DP Travel Solutions, I would like to check visa requirements.\nDestination: ${g("#dest")}\nService: ${g("#svc")}\nMy number: ${g("#ph")}`),"_blank","noopener")};
+$("#track").onsubmit=e=>{e.preventDefault();window.open(wa(`Hello, please share the status of my file: ${$("#ref").value}`),"_blank","noopener")};
+document.querySelectorAll("[data-wa]").forEach(a=>a.href=wa("Hello DP Travel Solutions, I need help with a visa."));
+document.querySelectorAll("[data-tel]").forEach(a=>a.href="tel:"+CFG.phone.replace(/\s/g,""));
+document.querySelectorAll("[data-mail]").forEach(a=>a.href="mailto:"+CFG.email);
+$("[data-phone]").textContent=CFG.phone;$("[data-email]").textContent=CFG.email;$("[data-address]").textContent=CFG.address;$("[data-hours]").textContent=CFG.hours;
+$("#menu").onclick=function(){const o=$("#links").classList.toggle("open");this.setAttribute("aria-expanded",o)};
+document.querySelectorAll("#links a").forEach(a=>a.addEventListener("click",()=>$("#links").classList.remove("open")));
+</script>
+</body>
+</html>
