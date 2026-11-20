@@ -202,6 +202,28 @@ $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>`
 $("#rail").innerHTML=D.map((x,i)=>`<button class="destination" type="button" data-i="${i}" aria-pressed="${i===0}"><div class="destination-image"><img src="${x.image}" alt="${x.n} destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>${x.c}</b>Collection</span></span></div><div class="destination-copy"><h3>${x.n}</h3><p>${x.short}</p></div></button>`).join("");
 function show(i){const x=D[i];document.querySelectorAll(".destination").forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));$("#detail").innerHTML=`<div><div class="eyebrow">Destination file · ${x.c}</div><h3>${x.n}</h3></div><p><strong style="color:#e0bd8d">Services</strong><br>${x.services}<br><br><strong style="color:#e0bd8d">Start with</strong><br>${x.docs}</p><a class="btn detail-action" href="#inquiry">Discuss this destination ↗</a>`}
 document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));show(0);
+// Custom DP Travel CMS: published content overrides these safe built-in defaults.
+(async()=>{
+ try{
+  const response=await fetch("/api/content",{cache:"no-store"});
+  if(!response.ok)return;
+  const payload=await response.json(),cms=payload.content;
+  if(!cms)return;
+  if(Array.isArray(cms.heroSlides)){
+   const slides=[...document.querySelectorAll("#heroCarousel .hero-slide")],dots=[...document.querySelectorAll("#heroCarousel .hero-dots button")];
+   slides.forEach((node,i)=>{const item=cms.heroSlides[i];node.hidden=!item;if(!item)return;const img=node.querySelector("img");if(img){img.src=item.image;img.alt=item.alt||item.title;img.removeAttribute("fetchpriority")}const title=node.querySelector(".country-title-panel strong"),eyebrow=node.querySelector(".country-title-panel span");if(title)title.textContent=item.title;if(eyebrow)eyebrow.textContent=item.eyebrow||"Discover the world";node.classList.toggle("is-active",i===0)});
+   dots.forEach((dot,i)=>{dot.hidden=i>=cms.heroSlides.length;dot.setAttribute("aria-label","Show "+(cms.heroSlides[i]?.title||"destination"));dot.setAttribute("aria-pressed",String(i===0))});
+  }
+  if(Array.isArray(cms.destinations)&&cms.destinations.length){
+   const mapped=cms.destinations.map(x=>({c:x.code,n:x.name,short:x.short,image:x.image,services:x.services,docs:x.docs}));
+   D.splice(0,D.length,...mapped);
+   $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>'<option>'+x.n+'</option>').join("")+'<option>Other country</option>';
+   $("#rail").innerHTML=D.map((x,i)=>'<button class="destination" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'"><div class="destination-image"><img src="'+x.image.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'" alt="'+x.n.replace(/"/g,"&quot;")+' destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>'+x.c+'</b>Collection</span></span></div><div class="destination-copy"><h3>'+x.n+'</h3><p>'+x.short+'</p></div></button>').join("");
+   document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));
+   show(0);
+  }
+ }catch(error){console.warn("CMS content unavailable; showing built-in website content.",error)}
+})();
 $("#inquiryForm").addEventListener("submit",async e=>{e.preventDefault();const val=s=>$(s).value;const lead={visitor_id:localStorage.dpVisitor||"",destination:val("#dest"),service:val("#svc"),phone:val("#ph"),source:"website enquiry"};const waUrl="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent("Hello DP Travels Solutions, I would like to enquire.\nDestination: "+lead.destination+"\nService: "+lead.service+"\nMy number: "+lead.phone);const win=window.open("about:blank","_blank");try{const r=await fetch("/api/leads",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(lead)});if(!r.ok)throw new Error("Lead capture unavailable")}catch(err){console.warn("Enquiry capture failed",err)}if(win)win.location.href=waUrl;else window.location.href=waUrl});
 $("#trackForm").addEventListener("submit",e=>{e.preventDefault();window.open(wa(`Hello, please share an update on my application. Reference: ${$("#ref").value}`),"_blank","noopener")});
 document.querySelectorAll("[data-wa]").forEach(a=>a.href=wa("Hello DP Travels Solutions, I would like assistance with a visa or travel plan."));
