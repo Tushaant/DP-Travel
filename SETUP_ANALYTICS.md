@@ -1,43 +1,37 @@
-# DP Travel chatbot and analytics setup
+# DP Travel custom admin portal setup
 
-This branch adds a lightweight FAQ-based support assistant and a private two-page analytics console. The assistant is rule-based at this stage; it does not call a generative AI model.
+The admin interface, authentication endpoints and analytics APIs are custom DP Travel code. PostgreSQL is the persistence layer; Supabase is not used.
 
-## 1. Create the database
+## 1. Provision PostgreSQL through Vercel
+1. Open the DP Travel project in Vercel.
+2. Open Storage / Marketplace and select Neon Postgres.
+3. Create a new Neon database and connect it to this Vercel project.
+4. Ensure the integration adds `DATABASE_URL` to Production and Preview.
+5. Keep the connection string server-side; never expose it in browser code or commit it.
 
-1. Create a Supabase project.
-2. Open SQL Editor.
-3. Run the contents of `supabase/schema.sql`.
+Vercel's old first-party Vercel Postgres product has been retired. Use a Postgres provider integration from the Vercel Marketplace; Neon is the recommended option for this project.
 
-The tables store anonymous visitor/session IDs, page path, referrer hostname, device class, and chat messages. This implementation does not collect IP addresses or ask visitors for identity-document numbers.
+## 2. Create the tables
+1. Open the Neon SQL Editor.
+2. Run the complete contents of `database/schema.sql`.
+3. Redeploy after confirming `DATABASE_URL` is available.
 
-## 2. Configure Vercel environment variables
+## 3. Configure admin credentials in Vercel
+Add these variables for Production and Preview:
+- `ADMIN_PASSWORD`: a unique, strong admin password.
+- `ADMIN_SESSION_SECRET`: a cryptographically random secret with at least 32 bytes.
+- `DATABASE_URL`: supplied by the Neon integration.
 
-In the DP Travel Vercel project, add these variables for Production and Preview:
+Generate the secret locally with `openssl rand -base64 48`. Do not share it in chat or commit it. Redeploy after changing environment variables.
 
-- `SUPABASE_URL`: Supabase project URL.
-- `SUPABASE_SERVICE_ROLE_KEY`: Supabase service-role key. Keep this server-side; never put it in browser code.
-- `ADMIN_PASSWORD`: A strong unique password for the admin console.
-- `ADMIN_SESSION_SECRET`: A random secret of at least 32 bytes.
-
-Redeploy after adding variables.
-
-## 3. Admin pages
-
+## 4. Admin portal
 - `/admin/index.html`: page views, unique visitors, sessions, query categories, top pages and daily trend.
-- `/admin/conversations.html`: recent user and assistant messages with timestamps, session IDs and page path.
+- `/admin/conversations.html`: recent chatbot messages with timestamps, session IDs and page path.
 
-Both pages require the admin password. The signed session cookie is HTTP-only and expires after eight hours.
+Both pages use the custom password login and an HTTP-only, Secure, SameSite=Strict signed session cookie. The API validates its signature and expiry on every admin data request.
 
-## 4. Current chatbot scope
+## 5. Data and privacy
+The analytics store anonymous visitor/session IDs, page path, referrer text and device class. It does not intentionally collect IP addresses or request passport/identity numbers. Chat messages are stored to support the conversation history screen. Publish a privacy notice, choose a retention period and periodically delete records no longer needed.
 
-The floating assistant answers common questions about attestation, verification, document tracking, travel and contact details. Unknown questions are directed to the team. Connect an approved LLM provider separately if free-form AI responses are required.
-
-## 5. Before launch
-
-- Test the chatbot and admin login on the Vercel Preview URL.
-- Confirm Supabase tables are receiving records.
-- Keep the service-role key and admin secrets private.
-- Publish a privacy notice explaining anonymous analytics and chat-message retention.
-- Decide an appropriate retention period and delete old conversation data periodically.
-
-Analytics will remain empty until the Supabase schema and Vercel environment variables are configured.
+## 6. Current scope and hardening
+The chatbot is rule-based FAQ guidance, not a generative AI assistant. The admin portal currently provides overview analytics and conversation history. Before a high-traffic production launch, add durable login rate-limiting, admin account management/MFA, configurable retention jobs, audit logging and role-based permissions.
