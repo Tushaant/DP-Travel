@@ -34,7 +34,7 @@ body{background:radial-gradient(ellipse at 78% 12%,rgba(65,90,119,.26),transpare
 body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.20;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 900 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .035' numOctaves='2' seed='8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.19'/%3E%3Cpath d='M-50 160 C160 35 250 310 470 175 S760 40 960 160 M-60 470 C150 340 270 610 480 470 S770 350 970 485' fill='none' stroke='%23b6c3d1' stroke-opacity='.15' stroke-width='34'/%3E%3C/svg%3E");background-size:cover}
 body>*{position:relative;z-index:1}
 p{color:#c4ccd5}
-header{background:rgba(13,27,42,.88);border-color:rgba(212,175,55,.25)}
+header{position:sticky;top:0;z-index:1000!important;background:rgba(13,27,42,.94);border-color:rgba(212,175,55,.25);isolation:isolate}nav{position:relative;z-index:1001}.mega{z-index:1002!important}
 .brand,.links{color:#F7F3E9}.brand span small,.eyebrow,.service .num,.service a span{color:#D4AF37}
 .btn{background:#D4AF37;border-color:#D4AF37;color:#0D1B2A}.btn:hover{background:#F7F3E9;border-color:#F7F3E9;color:#0D1B2A}.btn.light{color:#F7F3E9;border-color:rgba(247,243,233,.35);background:transparent}
 .hero{background:transparent}.hero h1 em{color:#D4AF37}.hero-visual{border:1px solid rgba(212,175,55,.35)}.floating-stamp{background:#1B263B;color:#F7F3E9;border-color:#D4AF37}
@@ -49,9 +49,60 @@ section{background:transparent}.section-head p{color:#c4ccd5}
 footer{border-top:1px solid rgba(212,175,55,.2)}footer p,footer li,footer a{color:#c4ccd5}
 .menu{color:#F7F3E9;border-color:rgba(212,175,55,.4)}
 /* Accessible category mega-menu */
-.links{gap:18px;align-items:center}.nav-group{position:relative}.nav-trigger{border:0;background:none;color:inherit;font:600 .78rem var(--sans);cursor:pointer;padding:12px 0}.nav-trigger:after{content:"⌄";color:#D4AF37;margin-left:7px}.mega{display:none;position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);width:min(760px,calc(100vw - 48px));padding:25px;background:#101e30;border:1px solid rgba(212,175,55,.35);box-shadow:0 22px 55px #0008;grid-template-columns:repeat(3,1fr);gap:22px;z-index:100}.nav-group:hover .mega,.nav-group:focus-within .mega,.nav-group.open .mega{display:grid}.mega h4{font:600 1.3rem var(--serif);color:#D4AF37;margin:0 0 10px}.mega a{display:block;padding:6px 0;color:#e9edf1;font-size:.76rem;line-height:1.4}.mega a:hover{color:#D4AF37}.mega .all-link{margin-top:8px;border-top:1px solid #ffffff26;padding-top:12px;color:#D4AF37;font-weight:700}
+.links{gap:18px;align-items:center}.nav-group{position:relative}.nav-trigger{border:0;background:none;color:inherit;font:600 .78rem var(--sans);cursor:pointer;padding:12px 0}.nav-trigger:after{content:"⌄";color:#D4AF37;margin-left:7px}.mega{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);width:min(760px,calc(100vw - 48px));padding:25px;background:#101e30;border:1px solid rgba(212,175,55,.35);box-shadow:0 22px 55px #0008;grid-template-columns:repeat(3,1fr);gap:22px;z-index:100}.nav-group:hover .mega,.nav-group:focus-within .mega,.nav-group.open .mega{display:grid}.mega h4{font:600 1.3rem var(--serif);color:#D4AF37;margin:0 0 10px}.mega a{display:block;padding:6px 0;color:#e9edf1;font-size:.76rem;line-height:1.4}.mega a:hover{color:#D4AF37}.mega .all-link{margin-top:8px;border-top:1px solid #ffffff26;padding-top:12px;color:#D4AF37;font-weight:700}
 @media(max-width:980px){.mega{width:min(680px,calc(100vw - 36px))}}
-@media(max-width:680px){.links.open{background:#101e30;border-color:rgba(212,175,55,.3)}.links.open .mega{position:static;transform:none;width:100%;display:none;grid-template-columns:1fr 1fr;padding:15px;margin:8px 0 12px;box-shadow:none}.links.open .nav-group.open .mega{display:grid}.links.open .nav-group{width:100%}.nav-trigger{width:100%;text-align:left;padding:10px 0}.links.open>a{padding:7px 0}}
+@media(max-width:680px){.links.open{z-index:1003;background:#101e30;border-color:rgba(212,175,55,.3)}.links.open .mega{position:static;transform:none;width:100%;display:none;grid-template-columns:1fr 1fr;padding:15px;margin:8px 0 12px;box-shadow:none}.links.open .nav-group.open .mega{display:grid}.links.open .nav-group{width:100%}.nav-trigger{width:100%;text-align:left;padding:10px 0}.links.open>a{padding:7px 0}}
+
+
+/* Navigation layering fix: keep the dropdown in front of the hero/banner stacking context */
+body>header{position:sticky;top:0;z-index:1000!important;isolation:isolate}
+body>header nav{position:relative;z-index:1001}
+body>header .mega{z-index:1002!important;top:100%;margin-top:10px}
+body>header .nav-group{padding-bottom:8px;margin-bottom:-8px}
+body>header .nav-group:after{content:"";position:absolute;left:-12px;right:-12px;top:100%;height:16px}
+body>header .nav-group:hover .mega,body>header .nav-group:focus-within .mega,body>header .nav-group.open .mega{display:grid}
+@media(max-width:680px){body>header .links.open{z-index:1003;max-height:calc(100vh - 70px);overflow-y:auto}body>header .links.open .mega{z-index:1004;margin-top:8px}}
+/* Hero image carousel */
+.hero-carousel{overflow:hidden;isolation:isolate;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+.hero-slides,.hero-slide{position:absolute;inset:0;margin:0}
+.hero-slide{opacity:0;visibility:hidden;transition:opacity 900ms ease,visibility 900ms}
+.hero-slide.is-active{opacity:1;visibility:visible}
+.hero-slide .hero-photo{transform:scale(1.035);transition:transform 7s ease;will-change:transform}
+.hero-slide.is-active .hero-photo{transform:scale(1)}
+.hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,12,22,.04) 35%,rgba(4,12,22,.62));pointer-events:none}
+.hero-slide .photo-caption{z-index:2}
+.hero-carousel-controls{position:absolute;z-index:5;right:22px;bottom:22px;display:flex;align-items:center;gap:12px}
+.hero-arrow{width:36px;height:36px;border:1px solid rgba(247,243,233,.65);border-radius:50%;background:rgba(13,27,42,.45);color:#F7F3E9;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s,transform .2s}
+.hero-arrow:hover{background:#D4AF37;color:#0D1B2A;transform:scale(1.06)}
+.hero-dots{display:flex;gap:6px}.hero-dots button{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:#F7F3E9aa;cursor:pointer}.hero-dots button[aria-pressed=true]{width:22px;border-radius:8px;background:#D4AF37}
+.hero-water{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .45s;background:radial-gradient(ellipse 100px 42px at 25% 45%,rgba(210,235,255,.25),transparent 75%),radial-gradient(ellipse 160px 55px at 70% 68%,rgba(212,175,55,.12),transparent 75%);mix-blend-mode:screen}
+.hero-carousel:hover .hero-water{opacity:1;animation:water-shimmer 5s ease-in-out infinite alternate}
+.hero-carousel:hover .hero-slide.is-active .hero-photo{filter:saturate(1.08) contrast(1.03)}
+.hero-carousel:before{content:"";position:absolute;inset:-40%;z-index:2;pointer-events:none;opacity:0;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 28px,rgba(226,240,255,.16) 29px 31px,transparent 32px 54px);transform:scale(.55);transition:opacity .35s}
+.hero-carousel:hover:before{opacity:.5;animation:water-ripple 7s linear infinite}
+@keyframes water-shimmer{from{transform:translate3d(-2%,1%,0)}to{transform:translate3d(2%,-1%,0)}}
+@keyframes water-ripple{from{transform:scale(.55) rotate(0deg)}to{transform:scale(1.05) rotate(9deg)}}
+/* Passport folio and ink-imprint stamp reveal */
+.passport-book{padding:26px;background:linear-gradient(145deg,#080f19,#111d2b 55%,#080f19);border:1px solid rgba(212,175,55,.34);box-shadow:0 24px 55px rgba(0,0,0,.22);position:relative;overflow:hidden}
+.passport-book:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 38px,rgba(247,243,233,.12) 39px,transparent 40px)}
+.passport-book-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:4px 4px 24px;border-bottom:1px solid rgba(212,175,55,.24);margin-bottom:22px}
+.passport-book-head strong{display:block;color:#D4AF37;font:500 3rem var(--serif);line-height:1.05}.passport-book-head strong small{font:600 .65rem var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#c3ccd5}
+.passport-book-note{max-width:300px;color:#c3ccd5;font-size:.76rem}
+.passport-seal{width:64px;height:64px;border:1px solid #D4AF37;border-radius:50%;display:grid;place-content:center;text-align:center;color:#D4AF37;font:600 1rem var(--serif);transform:rotate(-12deg);flex:none}.passport-seal b{font:600 .43rem var(--sans);letter-spacing:.16em}
+.passport-rail{position:relative;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.destination{opacity:0;transform:translateY(18px) scale(.98);transition:opacity .55s ease,transform .65s cubic-bezier(.2,.8,.2,1)}
+.destination.stamp-visible{opacity:1;transform:translateY(0) scale(1)}
+.destination-image{background:#101b29;border:1px solid rgba(212,175,55,.2)}
+.destination-image:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(145deg,rgba(212,175,55,.12),transparent 50%);opacity:.4}
+.destination-image img{transition:transform .75s cubic-bezier(.2,.8,.2,1),filter .6s}
+.destination:hover .destination-image img,.destination[aria-pressed=true] .destination-image img{transform:scale(1.09);filter:saturate(1.05)}
+.stamp-ring{width:90px;height:90px;border:2px solid rgba(212,175,55,.95);outline:1px dashed rgba(247,243,233,.7);outline-offset:4px;color:#F7F3E9;background:rgba(13,27,42,.58);backdrop-filter:blur(3px);opacity:0;transform:rotate(-18deg) scale(1.65);transition:opacity .35s,transform .65s cubic-bezier(.16,1,.3,1);text-shadow:0 2px 8px #000}
+.destination.stamp-visible .stamp-ring{opacity:1;transform:rotate(8deg) scale(1)}
+.destination:nth-child(2) .stamp-ring{transition-delay:.08s}.destination:nth-child(3) .stamp-ring{transition-delay:.16s}.destination:nth-child(4) .stamp-ring{transition-delay:.24s}.destination:nth-child(5) .stamp-ring{transition-delay:.32s}
+.destination-copy h3{color:#F7F3E9}.destination-copy p{color:#c3ccd5}
+@media(max-width:760px){.passport-rail{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:680px){.passport-book{padding:18px}.passport-book-head{align-items:flex-start}.passport-book-note{display:none}.passport-seal{width:52px;height:52px}.passport-rail{display:flex;overflow-x:auto;gap:14px;padding-bottom:14px;scroll-snap-type:x mandatory}.destination{flex:0 0 220px;scroll-snap-align:start}.hero-carousel-controls{right:14px;bottom:14px}.hero-carousel:before{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-slide,.hero-slide .hero-photo,.destination,.stamp-ring,.hero-water,.hero-carousel:before{transition:none!important;animation:none!important;transform:none!important}.destination{opacity:1}}
 
 </style>
 </head>
@@ -78,7 +129,16 @@ footer{border-top:1px solid rgba(212,175,55,.2)}footer p,footer li,footer a{colo
 <main id="top">
 <section class="hero"><div class="wrap hero-grid">
 <div class="hero-copy"><div class="eyebrow">The art of going places · Since 2004</div><h1>The world is closer <em>than you think.</em></h1><p>From your first visa checklist to your next international journey, we make every step simpler, clearer and more personal.</p><div class="actions"><a class="btn" href="#inquiry">Plan your journey <span class="arrow">↗</span></a><a class="btn light" href="#services">Explore our services</a></div><div class="hero-note">Trusted since 2004 · 22 years of expertise</div></div>
-<div class="hero-visual"><img class="hero-photo" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85" alt="Mountain lake and alpine destination at golden hour"><div class="photo-caption">A world of possibility<strong>Your next chapter awaits.</strong></div><div class="floating-stamp"><span>Trusted travel desk<b>22+</b>Years of journeys</span></div></div>
+<div class="hero-visual hero-carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Featured travel destinations">
+<div class="hero-slides">
+<figure class="hero-slide is-active"><img class="hero-photo" src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1400&q=85" alt="Mountain lake and alpine destination at golden hour"><figcaption class="photo-caption">A world of possibility<strong>Your next chapter awaits.</strong></figcaption></figure>
+<figure class="hero-slide"><img class="hero-photo" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1400&q=85" alt="Dubai skyline at twilight"><figcaption class="photo-caption">Beyond the familiar<strong>Find your own horizon.</strong></figcaption></figure>
+<figure class="hero-slide"><img class="hero-photo" src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1400&q=85" alt="London city skyline and landmark architecture"><figcaption class="photo-caption">A new chapter<strong>Make the world yours.</strong></figcaption></figure>
+</div>
+<div class="hero-carousel-controls"><button type="button" class="hero-arrow prev" aria-label="Previous destination">←</button><div class="hero-dots" role="group" aria-label="Choose featured image"><button type="button" aria-label="Show image 1" aria-pressed="true"></button><button type="button" aria-label="Show image 2" aria-pressed="false"></button><button type="button" aria-label="Show image 3" aria-pressed="false"></button></div><button type="button" class="hero-arrow next" aria-label="Next destination">→</button></div>
+<div class="floating-stamp"><span>Trusted travel desk<b>22+</b>Years of journeys</span></div>
+<div class="hero-water" aria-hidden="true"></div>
+</div>
 </div></section>
 <div class="trustbar"><div class="wrap trust-grid"><div class="trust-item"><strong>22+ years</strong><span>Of experience</span></div><div class="trust-item"><strong>2004</strong><span>Established</span></div><div class="trust-item"><strong>End-to-end</strong><span>Personal support</span></div><div class="trust-item"><strong>One-to-one</strong><span>Dedicated guidance</span></div></div></div>
 <section id="services"><div class="wrap"><div class="section-head"><div><div class="eyebrow">What we do</div><h2 style="margin-top:14px">Travel, documentation<br>and everything in between.</h2></div><p>Thoughtful guidance for the details that make a journey possible. One experienced team, from the first question to the final document.</p></div>
@@ -89,7 +149,10 @@ footer{border-top:1px solid rgba(212,175,55,.2)}footer p,footer li,footer a{colo
 <article class="service"><span class="num">04 / PERSONAL ASSISTANCE</span><h3>A real person at every step.</h3><p>Dedicated guidance and coordination throughout your application journey.</p><a href="services/contact.html">Talk to our team <span>↗</span></a></article>
 </div></div></section>
 <section class="passport" id="stamps"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Your destination passport</div><h2 style="margin-top:14px">Collect places.<br>Unlock stamps.</h2></div><p>Every destination has a story. Explore the places we can help you reach and start with the right guidance.</p></div>
-<div class="passport-rail" id="rail" aria-label="Explore destinations"></div><div class="destination-detail" id="detail" aria-live="polite"></div><p class="disclaimer">Passport stamps are a destination-discovery design element, not a representation of visa approval. Requirements and processing timelines vary by applicant and issuing authority.</p>
+<div class="passport-book" aria-label="Destination passport collection">
+<div class="passport-book-head"><div><span class="eyebrow">The destination collection</span><strong>05 <small>featured guides</small></strong></div><div class="passport-book-note">A little inspiration for the places waiting beyond your next page.</div><div class="passport-seal" aria-hidden="true">DP<br><b>TRAVEL</b></div></div>
+<div class="passport-rail" id="rail" aria-label="Explore destinations"></div>
+</div><div class="destination-detail" id="detail" aria-live="polite"></div><p class="disclaimer">Passport stamps are a destination-discovery design element, not a representation of visa approval. Requirements and processing timelines vary by applicant and issuing authority.</p>
 </div></section>
 <section class="legacy" id="legacy"><div class="wrap legacy-grid"><div class="legacy-copy"><div class="eyebrow" style="color:#d9b887">A little history. A lot of trust.</div><h2 style="margin-top:18px">Two decades of trust. <em>A world of journeys.</em></h2><p>Since 2004, DP Travel Solutions has helped travelers, professionals and families navigate the details behind international journeys. Today, the same personal approach meets a more convenient online experience.</p></div><div class="legacy-stats"><div class="legacy-stat"><strong>22+</strong><span>Years of experience</span></div><div class="legacy-stat"><strong>2004</strong><span>Established</span></div><div class="legacy-stat"><strong>One-to-one</strong><span>Personal guidance</span></div><div class="legacy-stat"><strong>End-to-end</strong><span>Journey support</span></div></div></div></section>
 <section id="process"><div class="wrap"><div class="eyebrow">Simple by design</div><h2 style="margin-top:14px">Your journey, made clearer.</h2><div class="process-grid">
@@ -124,5 +187,9 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
 </script>
 <script>
 (()=>{const groups=[...document.querySelectorAll('.nav-group')];groups.forEach(g=>{const b=g.querySelector('.nav-trigger');b.addEventListener('click',()=>{const open=!g.classList.contains('open');groups.forEach(x=>{x.classList.remove('open');x.querySelector('.nav-trigger').setAttribute('aria-expanded','false')});g.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open))})});document.addEventListener('click',e=>{if(!e.target.closest('.nav-group'))groups.forEach(g=>{g.classList.remove('open');g.querySelector('.nav-trigger').setAttribute('aria-expanded','false')})});})();
+</script>
+<script>
+(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const slides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function show(i){active=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('is-active',n===active));dots.forEach((d,n)=>d.setAttribute('aria-pressed',String(n===active)));}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),5200)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);start();})();
+(()=>{const cards=[...document.querySelectorAll('.destination')];if(!cards.length)return;if(!('IntersectionObserver'in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){cards.forEach(c=>c.classList.add('stamp-visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('stamp-visible');io.unobserve(e.target)}}),{threshold:.16});cards.forEach(c=>io.observe(c));})();
 </script>
 </body></html>
