@@ -75,13 +75,13 @@ body>header .nav-group:hover .mega,body>header .nav-group:focus-within .mega,bod
 .hero-arrow{width:36px;height:36px;border:1px solid rgba(247,243,233,.65);border-radius:50%;background:rgba(13,27,42,.45);color:#F7F3E9;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s,transform .2s}
 .hero-arrow:hover{background:#D4AF37;color:#0D1B2A;transform:scale(1.06)}
 .hero-dots{display:flex;gap:6px}.hero-dots button{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:#F7F3E9aa;cursor:pointer}.hero-dots button[aria-pressed=true]{width:22px;border-radius:8px;background:#D4AF37}
-.hero-water{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .45s;background:radial-gradient(ellipse 100px 42px at 25% 45%,rgba(210,235,255,.25),transparent 75%),radial-gradient(ellipse 160px 55px at 70% 68%,rgba(212,175,55,.12),transparent 75%);mix-blend-mode:screen}
-.hero-carousel:hover .hero-water{opacity:1;animation:water-shimmer 5s ease-in-out infinite alternate}
-.hero-carousel:hover .hero-slide.is-active .hero-photo{filter:saturate(1.08) contrast(1.03)}
-.hero-carousel:before{content:"";position:absolute;inset:-40%;z-index:2;pointer-events:none;opacity:0;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 28px,rgba(226,240,255,.16) 29px 31px,transparent 32px 54px);transform:scale(.55);transition:opacity .35s}
-.hero-carousel:hover:before{opacity:.5;animation:water-ripple 7s linear infinite}
-@keyframes water-shimmer{from{transform:translate3d(-2%,1%,0)}to{transform:translate3d(2%,-1%,0)}}
-@keyframes water-ripple{from{transform:scale(.55) rotate(0deg)}to{transform:scale(1.05) rotate(9deg)}}
+/* 3D ripple is confined to the original midnight-navy hero background */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:#0D1B2A}
+.hero:before{content:"";position:absolute;inset:-22% -10%;z-index:0;pointer-events:none;opacity:.42;background:repeating-radial-gradient(ellipse at 68% 44%,transparent 0 34px,rgba(115,157,194,.18) 35px 36px,rgba(225,239,250,.055) 37px 39px,transparent 40px 68px);transform:perspective(1000px) rotateX(61deg) rotateZ(-13deg) scale(1.25);transform-origin:68% 48%;filter:blur(.35px);mask-image:radial-gradient(ellipse at 68% 48%,#000 0%,rgba(0,0,0,.78) 38%,transparent 76%);animation:navy-ripple-drift 18s ease-in-out infinite alternate}
+.hero:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 68% 42%,rgba(65,90,119,.22),transparent 42%),radial-gradient(ellipse at 14% 78%,rgba(65,90,119,.12),transparent 38%);opacity:.75;animation:navy-ripple-light 13s ease-in-out infinite alternate}
+.hero-grid{position:relative;z-index:1}
+@keyframes navy-ripple-drift{0%{transform:perspective(1000px) rotateX(61deg) rotateZ(-13deg) translate3d(-1.5%,0,0) scale(1.2)}100%{transform:perspective(1000px) rotateX(61deg) rotateZ(-13deg) translate3d(1.5%,1%,0) scale(1.42)}}
+@keyframes navy-ripple-light{0%{opacity:.48}100%{opacity:.9}}
 /* Passport folio and ink-imprint stamp reveal */
 .passport-book{padding:26px;background:linear-gradient(145deg,#080f19,#111d2b 55%,#080f19);border:1px solid rgba(212,175,55,.34);box-shadow:0 24px 55px rgba(0,0,0,.22);position:relative;overflow:hidden}
 .passport-book:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 38px,rgba(247,243,233,.12) 39px,transparent 40px)}
@@ -102,25 +102,10 @@ body>header .nav-group:hover .mega,body>header .nav-group:focus-within .mega,bod
 .destination-copy h3{color:#F7F3E9}.destination-copy p{color:#c3ccd5}
 @media(max-width:760px){.passport-rail{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:680px){.passport-book{padding:18px}.passport-book-head{align-items:flex-start}.passport-book-note{display:none}.passport-seal{width:52px;height:52px}.passport-rail{display:flex;overflow-x:auto;gap:14px;padding-bottom:14px;scroll-snap-type:x mandatory}.destination{flex:0 0 220px;scroll-snap-align:start}.hero-carousel-controls{right:14px;bottom:14px}.hero-carousel:before{display:none}}
-@media(prefers-reduced-motion:reduce){.hero-slide,.hero-slide .hero-photo,.destination,.stamp-ring,.hero-water,.hero-carousel:before{transition:none!important;animation:none!important;transform:none!important}.destination{opacity:1}}
+@media(prefers-reduced-motion:reduce){.hero-slide,.hero-slide .hero-photo,.destination,.stamp-ring,.hero:before,.hero:after{transition:none!important;animation:none!important;transform:none!important}.destination{opacity:1}}
 
 
-/* Translucent fluid-ribbon hero art — adapted from the supplied motion reference */
-.hero-fluid-art{position:absolute;z-index:4;top:-3%;right:-8%;width:76%;height:108%;pointer-events:none;overflow:hidden;opacity:.88;mix-blend-mode:screen;filter:drop-shadow(0 18px 30px rgba(100,170,220,.18));}
-.hero-fluid-art svg{width:100%;height:100%;display:block;overflow:visible;transform-origin:58% 48%;animation:fluid-drift 12s ease-in-out infinite alternate}
-.hero-fluid-art svg g:first-of-type{animation:fluid-current 9s ease-in-out infinite alternate;transform-origin:60% 50%}
-.hero-carousel:hover .hero-fluid-art{opacity:1;filter:drop-shadow(0 22px 42px rgba(100,180,240,.3))}
-.hero-carousel:hover .hero-fluid-art svg{animation-duration:6s;transform:scale(1.045) rotate(-1deg)}
-.hero-fluid-art:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 48%,rgba(198,226,255,.12) 78%,transparent);transform:translateX(-110%);animation:fluid-glint 8s ease-in-out infinite;mix-blend-mode:screen}
-@keyframes fluid-drift{0%{transform:translate3d(1.5%,-1%,0) scale(1)}100%{transform:translate3d(-1.5%,1.2%,0) scale(1.035)}}
-@keyframes fluid-current{0%{transform:translate3d(-1%,0,0) rotate(-.6deg)}100%{transform:translate3d(1.5%,-1%,0) rotate(.8deg)}}
-@keyframes fluid-glint{0%,25%{transform:translateX(-110%)}65%,100%{transform:translateX(110%)}}
-.hero-carousel:before{opacity:.12;background:repeating-radial-gradient(ellipse at 50% 50%,transparent 0 34px,rgba(226,240,255,.12) 35px 37px,transparent 38px 66px)}
-.hero-carousel:hover:before{opacity:.3}
-.hero-carousel .hero-water{opacity:.13}
-.hero-carousel:hover .hero-water{opacity:.4}
-@media(max-width:680px){.hero-fluid-art{right:-20%;width:105%;height:86%;top:4%;opacity:.78}.hero-fluid-art svg{animation-duration:16s}.hero-carousel:hover .hero-fluid-art{opacity:.92}}
-@media(prefers-reduced-motion:reduce){.hero-fluid-art svg,.hero-fluid-art:after,.hero-fluid-art svg g:first-of-type{animation:none!important;transform:none!important}}
+
 
 </style>
 </head>
@@ -155,37 +140,7 @@ body>header .nav-group:hover .mega,body>header .nav-group:focus-within .mega,bod
 </div>
 <div class="hero-carousel-controls"><button type="button" class="hero-arrow prev" aria-label="Previous destination">←</button><div class="hero-dots" role="group" aria-label="Choose featured image"><button type="button" aria-label="Show image 1" aria-pressed="true"></button><button type="button" aria-label="Show image 2" aria-pressed="false"></button><button type="button" aria-label="Show image 3" aria-pressed="false"></button></div><button type="button" class="hero-arrow next" aria-label="Next destination">→</button></div>
 <div class="floating-stamp"><span>Trusted travel desk<b>22+</b>Years of journeys</span></div>
-<div class="hero-water" aria-hidden="true"></div>
-<div class="hero-fluid-art" aria-hidden="true">
-<svg viewBox="0 0 900 760" preserveAspectRatio="xMidYMid slice" role="presentation">
-<defs>
- <linearGradient id="fluidPearl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".28" stop-color="#f8fbff" stop-opacity=".88"/><stop offset=".52" stop-color="#8ec5f1" stop-opacity=".58"/><stop offset=".72" stop-color="#e7e9f8" stop-opacity=".72"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
- <linearGradient id="fluidEdge" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#fff" stop-opacity="0"/><stop offset=".38" stop-color="#d8f0ff" stop-opacity=".95"/><stop offset=".68" stop-color="#8fc8ff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>
- <radialGradient id="fluidGlow"><stop stop-color="#fff" stop-opacity=".95"/><stop offset=".5" stop-color="#b6ddff" stop-opacity=".4"/><stop offset="1" stop-color="#8fc8ff" stop-opacity="0"/></radialGradient>
- <filter id="fluidSoft"><feGaussianBlur stdDeviation="13"/></filter>
- <filter id="fluidWarp"><feTurbulence type="fractalNoise" baseFrequency=".012 .025" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="13" xChannelSelector="R" yChannelSelector="G"/></filter>
- <clipPath id="fluidClip"><path d="M120 70 C280 5 390 80 475 190 C570 310 670 300 890 170 L900 760 L130 760 C250 610 280 470 190 350 C120 260 35 160 120 70Z"/></clipPath>
-</defs>
-<g clip-path="url(#fluidClip)" filter="url(#fluidWarp)">
- <path d="M40 170 C220 10 350 65 445 205 C535 340 640 350 930 160 L950 360 C675 535 510 510 395 375 C285 245 190 210 40 360Z" fill="url(#fluidPearl)" opacity=".82"/>
- <path d="M-10 345 C190 180 330 215 445 360 C555 500 690 485 950 285" fill="none" stroke="url(#fluidEdge)" stroke-width="32" opacity=".82"/>
- <path d="M-10 380 C190 215 330 250 445 395 C555 535 690 520 950 320" fill="none" stroke="#fff" stroke-width="2.2" opacity=".85"/>
- <path d="M-20 410 C190 245 330 280 445 425 C555 565 690 550 950 350" fill="none" stroke="#b9e4ff" stroke-width="1.5" opacity=".82"/>
- <path d="M-25 440 C190 275 330 310 445 455 C555 595 690 580 950 380" fill="none" stroke="#fff" stroke-width="1" opacity=".78"/>
- <path d="M-25 470 C190 305 330 340 445 485 C555 625 690 610 950 410" fill="none" stroke="#a7d8ff" stroke-width="1.2" opacity=".72"/>
- <path d="M65 130 C250 30 355 105 470 255 C580 400 710 365 900 250" fill="none" stroke="#fff" stroke-width="18" opacity=".22" filter="url(#fluidSoft)"/>
- <path d="M100 555 C260 390 360 415 490 535 C610 645 760 600 930 490" fill="none" stroke="#d5c7f5" stroke-width="22" opacity=".25" filter="url(#fluidSoft)"/>
-</g>
-<g fill="url(#fluidGlow)">
- <circle cx="545" cy="215" r="54"/><circle cx="610" cy="260" r="27"/><circle cx="700" cy="310" r="35"/><circle cx="770" cy="250" r="22"/><circle cx="835" cy="195" r="30"/>
-</g>
-<g fill="#dff3ff" opacity=".86">
- <circle cx="460" cy="90" r="1.8"/><circle cx="527" cy="133" r="2.65"/><circle cx="594" cy="176" r="3.5"/><circle cx="661" cy="219" r="4.35"/><circle cx="728" cy="262" r="5.2"/><circle cx="795" cy="305" r="1.8"/><circle cx="862" cy="348" r="2.65"/><circle cx="499" cy="391" r="3.5"/><circle cx="566" cy="434" r="4.35"/><circle cx="633" cy="477" r="5.2"/><circle cx="700" cy="120" r="1.8"/><circle cx="767" cy="163" r="2.65"/><circle cx="834" cy="206" r="3.5"/><circle cx="471" cy="249" r="4.35"/><circle cx="538" cy="292" r="5.2"/><circle cx="605" cy="335" r="1.8"/><circle cx="672" cy="378" r="2.65"/><circle cx="739" cy="421" r="3.5"/><circle cx="806" cy="464" r="4.35"/><circle cx="873" cy="107" r="5.2"/><circle cx="510" cy="150" r="1.8"/><circle cx="577" cy="193" r="2.65"/><circle cx="644" cy="236" r="3.5"/><circle cx="711" cy="279" r="4.35"/><circle cx="778" cy="322" r="5.2"/><circle cx="845" cy="365" r="1.8"/><circle cx="482" cy="408" r="2.65"/><circle cx="549" cy="451" r="3.5"/><circle cx="616" cy="94" r="4.35"/><circle cx="683" cy="137" r="5.2"/><circle cx="750" cy="180" r="1.8"/><circle cx="817" cy="223" r="2.65"/><circle cx="884" cy="266" r="3.5"/><circle cx="521" cy="309" r="4.35"/><circle cx="588" cy="352" r="5.2"/><circle cx="655" cy="395" r="1.8"/><circle cx="722" cy="438" r="2.65"/><circle cx="789" cy="481" r="3.5"/><circle cx="856" cy="124" r="4.35"/><circle cx="493" cy="167" r="5.2"/><circle cx="560" cy="210" r="1.8"/><circle cx="627" cy="253" r="2.65"/><circle cx="694" cy="296" r="3.5"/><circle cx="761" cy="339" r="4.35"/><circle cx="828" cy="382" r="5.2"/><circle cx="465" cy="425" r="1.8"/><circle cx="532" cy="468" r="2.65"/><circle cx="599" cy="111" r="3.5"/><circle cx="666" cy="154" r="4.35"/><circle cx="733" cy="197" r="5.2"/><circle cx="800" cy="240" r="1.8"/><circle cx="867" cy="283" r="2.65"/><circle cx="504" cy="326" r="3.5"/><circle cx="571" cy="369" r="4.35"/><circle cx="638" cy="412" r="5.2"/><circle cx="705" cy="455" r="1.8"/><circle cx="772" cy="98" r="2.65"/><circle cx="839" cy="141" r="3.5"/>
-</g>
-<g fill="none" stroke="#fff" stroke-width="1.5" opacity=".55">
- <path d="M510 90 C620 150 690 155 820 80"/><path d="M480 125 C615 195 705 205 860 125"/><path d="M470 160 C610 235 720 245 890 165"/>
-</g>
-</svg></div>
+
 </div>
 </div></section>
 <div class="trustbar"><div class="wrap trust-grid"><div class="trust-item"><strong>22+ years</strong><span>Of experience</span></div><div class="trust-item"><strong>2004</strong><span>Established</span></div><div class="trust-item"><strong>End-to-end</strong><span>Personal support</span></div><div class="trust-item"><strong>One-to-one</strong><span>Dedicated guidance</span></div></div></div>
