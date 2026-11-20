@@ -16,7 +16,7 @@ module.exports=async(req,res)=>{
    db`SELECT id,visitor_id,session_id,page_path,role,message,created_at FROM dp_chat_messages WHERE created_at>=${start}::timestamptz AND created_at<${end}::timestamptz ORDER BY created_at DESC LIMIT 300`,
    db`SELECT COUNT(*)::int count FROM dp_chat_messages WHERE role='user' AND created_at>=${start}::timestamptz AND created_at<${end}::timestamptz`,
    db`SELECT COUNT(*)::int count,COUNT(DISTINCT visitor_id)::int visitors FROM dp_enquiries WHERE created_at>=${start}::timestamptz AND created_at<${end}::timestamptz`,
-   db`SELECT COUNT(*)::int count FROM dp_chat_messages u WHERE u.role='user' AND u.created_at>=${start}::timestamptz AND u.created_at<${end}::timestamptz AND NOT EXISTS (SELECT 1 FROM dp_chat_messages a WHERE a.session_id=u.session_id AND a.role='assistant' AND a.created_at>u.created_at)`
+   db`SELECT COUNT(*)::int count FROM dp_chat_messages WHERE role='assistant' AND message LIKE ${"%verified information%"} AND created_at>=${start}::timestamptz AND created_at<${end}::timestamptz`
   ]);
   const leads=await db`SELECT id,name,phone,destination,service,source,created_at,status FROM dp_enquiries WHERE created_at>=${start}::timestamptz AND created_at<${end}::timestamptz ORDER BY created_at DESC LIMIT 300`;
   const conversion=s[0].unique_visitors?Number((l[0].visitors/s[0].unique_visitors*100).toFixed(1)):0;
