@@ -2,7 +2,8 @@
 /* Royal navy & gold service-page theme with subtle woven fabric movement */
 :root{--paper:#0D1B2A;--pale:#1B263B;--ink:#F7F3E9;--forest:#1B263B;--terra:#D4AF37;--gold:#D4AF37;--line:rgba(247,243,233,.18)}
 body{background:radial-gradient(ellipse at 80% 8%,rgba(65,90,119,.28),transparent 36%),linear-gradient(145deg,#0D1B2A,#101f33 52%,#0b1726);color:#F7F3E9;position:relative}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 900 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .035' numOctaves='2' seed='8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3Cpath d='M-50 160 C160 35 250 310 470 175 S760 40 960 160 M-60 470 C150 340 270 610 480 470 S770 350 970 485' fill='none' stroke='%23b6c3d1' stroke-opacity='.18' stroke-width='34'/%3E%3C/svg%3E");background-size:cover}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 900 700' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .035' numOctaves='2' seed='8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3Cpath d='M-50 160 C160 35 250 310 470 175 S760 40 960 160 M-60 470 C150 340 270 610 480 470 S770 350 970 485' fill='none' stroke='%23b6c3d1' stroke-opacity='.18' stroke-width='34'/%3E%3C/svg%3E");background-size:cover}
+body>*{position:relative;z-index:1}
 header{background:rgba(13,27,42,.91);border-color:rgba(212,175,55,.28)}
 .brand,.navlinks{color:#F7F3E9}.brand small,.eyebrow,.crumb{color:#D4AF37}
 .hero{background:linear-gradient(140deg,rgba(27,38,59,.92),rgba(13,27,42,.8));border-bottom:1px solid rgba(212,175,55,.18)}
