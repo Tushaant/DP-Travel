@@ -12,7 +12,7 @@ module.exports=async(req,res)=>{
   if(req.method!=="PUT")return json(res,405,{error:"Method not allowed"});
   const content=req.body?.content;
   if(!content||typeof content!=="object"||!Array.isArray(content.heroSlides)||!Array.isArray(content.destinations))return json(res,400,{error:"Invalid homepage content structure"});
-  if(content.heroSlides.length>12||content.destinations.length>30)return json(res,400,{error:"Too many items"});
+  if(content.heroSlides.length!==9||content.destinations.length>30)return json(res,400,{error:"The homepage carousel must contain exactly 9 slides; destinations are limited to 30."});
   const clean={
    heroSlides:content.heroSlides.map(x=>({title:String(x.title||"").trim().slice(0,80),eyebrow:String(x.eyebrow||"Discover the world").trim().slice(0,80),image:String(x.image||"").trim().slice(0,1500),alt:String(x.alt||x.title||"").trim().slice(0,180)})),
    destinations:content.destinations.map(x=>({code:String(x.code||"").trim().slice(0,12),name:String(x.name||"").trim().slice(0,80),short:String(x.short||"").trim().slice(0,120),image:String(x.image||"").trim().slice(0,1500),services:String(x.services||"").trim().slice(0,600),docs:String(x.docs||"").trim().slice(0,600)}))
