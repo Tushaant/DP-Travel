@@ -1,9 +1,9 @@
 const {json,ready,sql,auth}=require("./_lib");
 module.exports=async(req,res)=>{if(req.method!=="GET")return json(res,405,{error:"Method not allowed"});if(!auth(req))return json(res,401,{error:"Please sign in"});if(!ready())return json(res,503,{error:"Database is not connected. Add DATABASE_URL in Vercel."});try{const db=sql();const [s,d,t,p,m,c]=await Promise.all([
 db`SELECT COUNT(*)::int visits,COUNT(DISTINCT visitor_id)::int unique_visitors,COUNT(DISTINCT session_id)::int sessions FROM dp_page_visits`,
-db`SELECT TO_CHAR(created_at AT TIME ZONE 'UTC','YYYY-MM-DD') day,COUNT(*)::int count FROM dp_page_visits WHERE created_at>=NOW()-INTERVAL '14 days' GROUP BY day ORDER BY day`,
+db`SELECT TO_CHAR(created_at AT TIME ZONE 'UTC','YYYY-MM-DD') AS visit_day,COUNT(*)::int count FROM dp_page_visits WHERE created_at>=NOW()-INTERVAL '14 days' GROUP BY visit_day ORDER BY visit_day`,
 db`SELECT CASE WHEN message~*'(attest|apostille|mea|mofa|embassy|hrd)' THEN 'Attestation' WHEN message~*'(dataflow|wes|icas|nnas|verification)' THEN 'Verification' WHEN message~*'(track|status|reference)' THEN 'Document tracking' WHEN message~*'(visa|travel|tour|flight|hotel)' THEN 'Travel & visa' ELSE 'Other' END topic,COUNT(*)::int count FROM dp_chat_messages WHERE role='user' GROUP BY topic ORDER BY count DESC`,
 db`SELECT page_path,COUNT(*)::int count FROM dp_page_visits GROUP BY page_path ORDER BY count DESC LIMIT 8`,
 db`SELECT id,visitor_id,session_id,page_path,role,message,created_at FROM dp_chat_messages ORDER BY created_at DESC LIMIT 300`,
 db`SELECT COUNT(*)::int count FROM dp_chat_messages WHERE role='user'`
-]);return json(res,200,{stats:{...s[0],chat_queries:c[0].count},daily:d.map(x=>[x.day,x.count]),topics:t.map(x=>[x.topic,x.count]),top_pages:p.map(x=>[x.page_path,x.count]),messages:m})}catch(e){console.error("admin-data",e);return json(res,500,{error:"Unable to load analytics"})}};
+]);return json(res,200,{stats:{...s[0],chat_queries:c[0].count},daily:d.map(x=>[x.visit_day,x.count]),topics:t.map(x=>[x.topic,x.count]),top_pages:p.map(x=>[x.page_path,x.count]),messages:m})}catch(e){console.error("admin-data",e);return json(res,500,{error:"Unable to load analytics"})}};
