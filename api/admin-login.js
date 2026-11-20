@@ -1,0 +1,2 @@
+const {json,token,passwordMatches}=require("./_lib");
+module.exports=async(req,res)=>{if(req.method!=="POST")return json(res,405,{error:"Method not allowed"});if(!process.env.ADMIN_PASSWORD||!process.env.ADMIN_SESSION_SECRET)return json(res,503,{error:"Admin environment variables are missing"});if(!passwordMatches((req.body||{}).password))return json(res,401,{error:"Incorrect password"});res.setHeader("Set-Cookie","dp_admin="+encodeURIComponent(token())+"; HttpOnly; Secure; SameSite=Strict; Path=/api; Max-Age=28800");return json(res,200,{ok:true})};
