@@ -51,3 +51,5 @@
  .hub-hero:before,.hub-card:before{animation:none;transform:none;will-change:auto}
  .hub-card,.hub-card:hover{transition:none;transform:none;box-shadow:none}
 }
+
+/* Redeploy trigger: verify image visibility and motion preview. */
