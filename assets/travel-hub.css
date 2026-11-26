@@ -32,3 +32,24 @@
 @keyframes routeDraw{from{transform:scaleX(.2);opacity:.55}to{transform:scaleX(1);opacity:1}}
 @media(prefers-reduced-motion:reduce){.hub-hero:before,.hub-route{animation:none}.hub-reveal{opacity:1;transform:none;transition:none}.hub-card:before,.hub-photo{transition:none}}
 @media(max-width:720px){.hub-hero{padding:72px 0 62px}.hub-card{min-height:250px}.hub-card>div{padding:22px}}
+
+
+/* Image visibility + restrained motion fix */
+.hub-hero:before{z-index:0;pointer-events:none;will-change:transform;animation:heroDrift 26s ease-in-out infinite alternate}
+.hub-hero:after{z-index:1;pointer-events:none}
+.hub-hero .wrap{z-index:2}
+.hub-card:before{z-index:0;animation:cardDrift 34s ease-in-out infinite alternate;will-change:transform}
+.hub-card:after{z-index:1;pointer-events:none}
+.hub-card>div,.hub-card>span{position:relative;z-index:2}
+.hub-card{transition:transform .35s ease,box-shadow .35s ease}
+.hub-card:hover{transform:translateY(-6px);box-shadow:0 22px 42px #17231d30}
+.hub-card:hover:before{transform:scale(1.09)}
+.hub-hero .hub-route{position:relative;z-index:2}
+@keyframes cardDrift{0%{transform:scale(1.04) translate3d(0,0,0)}100%{transform:scale(1.12) translate3d(-1.2%,-.8%,0)}}
+@keyframes heroDrift{0%{transform:scale(1.04) translate3d(0,0,0)}100%{transform:scale(1.12) translate3d(-1.4%,-.6%,0)}}
+@media(prefers-reduced-motion:reduce){
+ .hub-hero:before,.hub-card:before{animation:none;transform:none;will-change:auto}
+ .hub-card,.hub-card:hover{transition:none;transform:none;box-shadow:none}
+}
+
+/* Redeploy trigger: verify image visibility and motion preview. */
