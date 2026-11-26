@@ -187,6 +187,57 @@ header nav>.menu{flex:0 0 auto}
  header nav>.links{white-space:normal}
  header nav>.links>a,header nav>.links .nav-group,header nav>.links .nav-trigger{white-space:normal}
 }
+
+/* Reference-matched card stack: one dominant front card, two smaller cards behind. */
+.hero{position:relative;isolation:isolate;overflow:hidden;background:#0D1B2A}
+.hero:before{content:"";position:absolute;inset:-3%;z-index:0;pointer-events:none;background-image:linear-gradient(90deg,rgba(7,17,29,.82) 0%,rgba(7,17,29,.62) 42%,rgba(7,17,29,.48) 100%),linear-gradient(0deg,rgba(7,17,29,.36),rgba(7,17,29,.24)),var(--hero-destination-bg,none);background-size:cover;background-position:center 48%;filter:blur(1.5px) saturate(.62) brightness(.56);transform:scale(1.035);opacity:.92;transition:opacity .65s ease,filter .65s ease}
+.hero:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(90deg,rgba(13,27,42,.45),rgba(13,27,42,.12) 65%,rgba(13,27,42,.28))}
+.hero-grid{position:relative;z-index:1}
+.hero-copy,.hero-copy h1,.hero-copy>p,.hero-note{color:#F7F3E9}
+.hero-copy .eyebrow{color:#D4AF37}
+.hero h1 em{color:#D4AF37}
+.country-carousel{height:620px;overflow:hidden;border:0!important;background:transparent;box-shadow:none;perspective:1500px;isolation:isolate}
+.country-carousel .hero-slides{position:absolute;inset:0;transform-style:preserve-3d;perspective:1500px}
+.country-carousel .hero-slide{position:absolute;top:9%;left:5%;right:auto;width:34%;height:78%;margin:0;overflow:hidden;border:1px solid rgba(247,243,233,.2);border-radius:3px;opacity:0;visibility:visible;pointer-events:none;z-index:1;transform:translateZ(-150px) scale(.76) rotateY(13deg);transform-origin:right center;filter:brightness(.48) saturate(.68);box-shadow:0 14px 36px rgba(0,0,0,.38);backface-visibility:hidden;transition:left .9s cubic-bezier(.2,.75,.2,1),right .9s cubic-bezier(.2,.75,.2,1),top .9s cubic-bezier(.2,.75,.2,1),width .9s cubic-bezier(.2,.75,.2,1),height .9s cubic-bezier(.2,.75,.2,1),transform .9s cubic-bezier(.2,.75,.2,1),opacity .7s ease,filter .9s ease,box-shadow .9s ease}
+.country-carousel .hero-slide .hero-photo{width:100%;height:100%;object-fit:cover;transform:scale(1.025);transition:transform 1.1s cubic-bezier(.2,.75,.2,1),filter .85s ease}
+.country-carousel .hero-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,15,25,.02),rgba(7,15,25,.08) 54%,rgba(7,15,25,.62));pointer-events:none}
+.country-carousel .hero-slide.is-active{left:24%!important;right:auto!important;top:0!important;width:52%!important;height:94%!important;opacity:1!important;z-index:20!important;pointer-events:auto;transform:translateZ(100px) scale(1) rotateY(0)!important;transform-origin:center;filter:brightness(1) saturate(.96)!important;box-shadow:0 30px 72px rgba(0,0,0,.48)}
+.country-carousel .hero-slide.is-active .hero-photo{transform:scale(1)}
+.country-carousel .hero-slide.is-prev{left:3%!important;right:auto!important;top:10%!important;width:35%!important;height:76%!important;opacity:.78!important;z-index:5!important;pointer-events:auto;transform:translateZ(-135px) scale(.78) rotateY(15deg)!important;transform-origin:right center;filter:brightness(.48) saturate(.65)!important}
+.country-carousel .hero-slide.is-next{left:auto!important;right:3%!important;top:10%!important;width:35%!important;height:76%!important;opacity:.78!important;z-index:5!important;pointer-events:auto;transform:translateZ(-135px) scale(.78) rotateY(-15deg)!important;transform-origin:left center;filter:brightness(.48) saturate(.65)!important}
+.country-carousel .hero-slide.is-far{opacity:0!important;z-index:0!important;transform:translateZ(-240px) scale(.62)!important;pointer-events:none}
+.country-carousel .hero-slide:not(.is-active) .country-title-panel{opacity:0!important;visibility:hidden!important}
+.country-carousel .country-title-panel{left:6%;right:6%;top:auto;bottom:7%;transform:none;min-height:142px;padding:16px 20px;background:rgba(255,252,244,.88);backdrop-filter:blur(5px);transition:opacity .4s ease}
+.country-carousel .country-title-panel strong{font-size:clamp(2.7rem,5.2vw,5rem)}
+.country-carousel .hero-carousel-controls{right:5%;bottom:1%;z-index:25}
+.country-carousel .hero-arrow{width:40px;height:40px}
+.country-carousel .floating-stamp{z-index:24;left:5%;top:3%}
+@media(max-width:900px){
+ .hero-grid{grid-template-columns:1fr 1fr;gap:26px}
+ .country-carousel{height:540px}
+ .country-carousel .hero-slide.is-active{left:22%!important;width:56%!important}
+ .country-carousel .hero-slide.is-prev{left:1%!important;width:38%!important}
+ .country-carousel .hero-slide.is-next{right:1%!important;width:38%!important}
+}
+@media(max-width:680px){
+ .hero{padding:36px 0 56px}
+ .hero-grid{grid-template-columns:1fr;gap:28px}
+ .hero-copy{padding:12px 0 0}
+ .country-carousel{height:440px;margin:0 6px;perspective:1000px}
+ .country-carousel .hero-slide.is-active{left:20%!important;width:60%!important;top:0!important;height:88%!important}
+ .country-carousel .hero-slide.is-prev{left:-1%!important;width:40%!important;top:9%!important;height:72%!important;transform:translateZ(-100px) scale(.76) rotateY(12deg)!important}
+ .country-carousel .hero-slide.is-next{right:-1%!important;width:40%!important;top:9%!important;height:72%!important;transform:translateZ(-100px) scale(.76) rotateY(-12deg)!important}
+ .country-carousel .country-title-panel{left:5%;right:5%;bottom:6%;min-height:108px;padding:12px}
+ .country-carousel .country-title-panel strong{font-size:clamp(2.3rem,10vw,3.7rem)}
+ .country-carousel .hero-carousel-controls{right:4%;bottom:0;gap:8px}
+ .country-carousel .hero-arrow{width:34px;height:34px}
+ .country-carousel .floating-stamp{width:82px;height:82px;left:2%;top:2%}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero:before{transition:none;filter:brightness(.56) saturate(.62)}
+ .country-carousel .hero-slide,.country-carousel .hero-slide .hero-photo{transition:none!important}
+ .country-carousel .hero-slide:not(.is-active){opacity:0!important}
+}
 </style>
 </head>
 <body>
@@ -301,7 +352,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
 (()=>{const groups=[...document.querySelectorAll('.nav-group')];groups.forEach(g=>{const b=g.querySelector('.nav-trigger');b.addEventListener('click',()=>{const open=!g.classList.contains('open');groups.forEach(x=>{x.classList.remove('open');x.querySelector('.nav-trigger').setAttribute('aria-expanded','false')});g.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open))})});document.addEventListener('click',e=>{if(!e.target.closest('.nav-group'))groups.forEach(g=>{g.classList.remove('open');g.querySelector('.nav-trigger').setAttribute('aria-expanded','false')})});})();
 </script>
 <script>
-(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const slides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function show(i){active=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('is-active',n===active));dots.forEach((d,n)=>d.setAttribute('aria-pressed',String(n===active)));}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),1500)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);start();})();
+(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const allSlides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null,startX=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function slides(){return allSlides.filter(s=>!s.hidden)}function show(i){const live=slides();if(!live.length)return;active=(i+live.length)%live.length;live.forEach((s,n)=>{s.classList.toggle('is-active',n===active);s.classList.toggle('is-prev',n===(active-1+live.length)%live.length&&live.length>1);s.classList.toggle('is-next',n===(active+1)%live.length&&live.length>1);s.classList.toggle('is-far',n!==active&&n!==(active-1+live.length)%live.length&&n!==(active+1)%live.length);s.setAttribute('aria-hidden',String(n!==active));});const activeImage=live[active].querySelector('.hero-photo');if(activeImage){const hero=document.querySelector('.hero');hero.style.setProperty('--hero-destination-bg','url("'+activeImage.currentSrc+'")');}dots.forEach((d,n)=>{d.setAttribute('aria-pressed',String(n===active));d.hidden=n>=live.length});}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),4800)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('click',e=>{const card=e.target.closest('.hero-slide.is-prev,.hero-slide.is-next');if(card){show(active+(card.classList.contains('is-next')?1:-1));start()}});root.addEventListener('pointerdown',e=>{startX=e.clientX});root.addEventListener('pointerup',e=>{const dx=e.clientX-startX;if(Math.abs(dx)>45){show(active+(dx<0?1:-1));start()}});root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);show(0);start();})();
 (()=>{const cards=[...document.querySelectorAll('.destination')];if(!cards.length)return;if(!('IntersectionObserver'in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){cards.forEach(c=>c.classList.add('stamp-visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('stamp-visible');io.unobserve(e.target)}}),{threshold:.16});cards.forEach(c=>io.observe(c));})();
 </script>
 <script src="/assets/navigation-public.js" defer></script>
