@@ -467,7 +467,7 @@ const D=[
 ];
 const $=s=>document.querySelector(s);const wa=t=>`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(t)}`;
 $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>`<option>${x.n}</option>`).join("")+'<option>Other country</option>';
-$("#rail").innerHTML=D.map((x,i)=>`<button class="destination" type="button" data-i="${i}" aria-pressed="${i===0}"><div class="destination-image"><img src="${x.image}" alt="${x.n} destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>${x.c}</b>Collection</span></span></div><div class="destination-copy"><h3>${x.n}</h3><p>${x.short}</p></div></button>`).join("");
+$("#rail").innerHTML=D.map((x,i)=>`<button class="destination" type="button" data-i="${i}" aria-pressed="${i===0}"><div class="destination-image"><img src="${x.image||x.fallbackImage}" data-fallback="${x.fallbackImage||""}" alt="${x.n} destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>${x.c}</b>Collection</span></span></div><div class="destination-copy"><h3>${x.n}</h3><p>${x.short}</p></div></button>`).join("");
 function show(i){const x=D[i];document.querySelectorAll(".destination").forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));$("#detail").innerHTML=`<div><div class="eyebrow">Destination file · ${x.c}</div><h3>${x.n}</h3></div><p><strong style="color:#e0bd8d">Services</strong><br>${x.services}<br><br><strong style="color:#e0bd8d">Start with</strong><br>${x.docs}</p><a class="btn detail-action" href="#inquiry">Discuss this destination ↗</a>`}
 document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));show(0);
 
@@ -509,11 +509,13 @@ function renderTestimonials(cms){
    dots.forEach((dot,i)=>{dot.hidden=i>=cms.heroSlides.length;dot.setAttribute("aria-label","Show "+(cms.heroSlides[i]?.title||"destination"));dot.setAttribute("aria-pressed",String(i===0))});
   }
   if(Array.isArray(cms.destinations)&&cms.destinations.length){
-   const mapped=cms.destinations.map(x=>({c:x.code,n:x.name,short:x.short,image:x.image,services:x.services,docs:x.docs}));
+   const builtInDestinations=D.slice();
+   const mapped=cms.destinations.map((x,i)=>({c:x.code||builtInDestinations[i%builtInDestinations.length]?.c||"DP",n:x.name||builtInDestinations[i%builtInDestinations.length]?.n||"Destination",short:x.short||builtInDestinations[i%builtInDestinations.length]?.short||"",image:x.image||builtInDestinations[i%builtInDestinations.length]?.image||"",fallbackImage:builtInDestinations[i%builtInDestinations.length]?.image||"",services:x.services,docs:x.docs}));
    D.splice(0,D.length,...mapped);
    $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>'<option>'+x.n+'</option>').join("")+'<option>Other country</option>';
    $("#rail").innerHTML=D.map((x,i)=>'<button class="destination" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'"><div class="destination-image"><img src="'+x.image.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'" alt="'+x.n.replace(/"/g,"&quot;")+' destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>'+x.c+'</b>Collection</span></span></div><div class="destination-copy"><h3>'+x.n+'</h3><p>'+x.short+'</p></div></button>').join("");
    document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));
+   document.querySelectorAll(".destination-image img").forEach(img=>img.addEventListener("error",()=>{const fallback=img.dataset.fallback;if(fallback){img.src=fallback;img.removeAttribute("data-fallback")}else{img.style.visibility="hidden"}},{once:true}));
    show(0);
   }
  }catch(error){console.warn("CMS content unavailable; showing built-in website content.",error)}
