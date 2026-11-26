@@ -239,6 +239,58 @@ header nav>.menu{flex:0 0 auto}
  .country-carousel .hero-slide,.country-carousel .hero-slide .hero-photo{transition:none!important}
  .country-carousel .hero-slide:not(.is-active){opacity:0!important}
 }
+
+/* Final coverflow depth correction: centre card is always the foreground layer. */
+#heroCarousel{overflow:hidden!important;isolation:isolate;perspective:1600px}
+#heroCarousel .hero-slides{position:absolute;inset:0;overflow:hidden;isolation:isolate;transform-style:preserve-3d}
+#heroCarousel .hero-slide{
+  position:absolute!important;top:12%!important;left:0!important;right:auto!important;
+  width:34%!important;height:72%!important;z-index:1!important;
+  transform:translate3d(0,0,-150px) scale(.78)!important;
+  opacity:0!important;filter:brightness(.48) saturate(.62)!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.22)!important;
+}
+#heroCarousel .hero-slide.is-prev{
+  left:0!important;right:auto!important;top:13%!important;width:36%!important;height:70%!important;
+  z-index:2!important;opacity:.62!important;pointer-events:auto!important;
+  transform:translate3d(0,0,-100px) scale(.82) rotateY(9deg)!important;
+  transform-origin:right center!important;filter:brightness(.52) saturate(.62)!important;
+}
+#heroCarousel .hero-slide.is-next{
+  left:auto!important;right:0!important;top:13%!important;width:36%!important;height:70%!important;
+  z-index:2!important;opacity:.62!important;pointer-events:auto!important;
+  transform:translate3d(0,0,-100px) scale(.82) rotateY(-9deg)!important;
+  transform-origin:left center!important;filter:brightness(.52) saturate(.62)!important;
+}
+#heroCarousel .hero-slide.is-active{
+  left:18%!important;right:auto!important;top:2%!important;width:64%!important;height:88%!important;
+  z-index:10!important;opacity:1!important;pointer-events:auto!important;
+  transform:translate3d(0,0,80px) scale(1)!important;filter:brightness(1) saturate(.96)!important;
+  box-shadow:0 30px 75px rgba(0,0,0,.48)!important;
+}
+#heroCarousel .hero-slide.is-active .hero-photo{transform:scale(1)!important}
+#heroCarousel .hero-slide.is-active .country-title-panel{opacity:1!important;visibility:visible!important}
+#heroCarousel .hero-slide.is-prev .country-title-panel,
+#heroCarousel .hero-slide.is-next .country-title-panel,
+#heroCarousel .hero-slide.is-far .country-title-panel{opacity:0!important;visibility:hidden!important}
+#heroCarousel .hero-slide.is-far{z-index:0!important;opacity:0!important;pointer-events:none!important}
+#heroCarousel .hero-carousel-controls{z-index:20!important}
+@media(max-width:900px){
+ #heroCarousel .hero-slide.is-active{left:16%!important;width:68%!important}
+ #heroCarousel .hero-slide.is-prev{width:38%!important}
+ #heroCarousel .hero-slide.is-next{width:38%!important}
+}
+@media(max-width:680px){
+ #heroCarousel{height:440px!important}
+ #heroCarousel .hero-slide.is-active{left:14%!important;width:72%!important;top:2%!important;height:84%!important}
+ #heroCarousel .hero-slide.is-prev{left:0!important;width:38%!important;top:14%!important;height:68%!important}
+ #heroCarousel .hero-slide.is-next{right:0!important;width:38%!important;top:14%!important;height:68%!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #heroCarousel .hero-slide{transition:none!important}
+ #heroCarousel .hero-slide:not(.is-active){opacity:0!important}
+}
+
 </style>
 </head>
 <body>
