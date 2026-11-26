@@ -1,5 +1,6 @@
 const {json,ready,sql,auth}=require("./_lib");
 const MAX=100000;
+const DESTINATION_DEFAULTS=[{"code":"UAE","name":"United Arab Emirates","short":"Work · Visit · Residency","image":"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80","services":"Visit, business, work and residency visa guidance.","docs":"Passport copy, photograph and purpose-specific supporting documents."},{"code":"UK","name":"United Kingdom","short":"Visit · Business · Study","image":"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80","services":"Visitor, business and student visa assistance.","docs":"Application details, financial evidence, travel purpose and supporting records."},{"code":"USA","name":"United States","short":"Visitor · Business","image":"https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80","services":"Visitor and business visa preparation support.","docs":"Application form, appointment process and relevant personal and financial documents."},{"code":"SCH","name":"Schengen","short":"Tourism · Business","image":"https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80","services":"Short-stay tourism and business visa guidance.","docs":"Travel itinerary, accommodation, insurance and supporting financial documents."},{"code":"CAN","name":"Canada","short":"Visit · Study · Migration","image":"https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=800&q=80","services":"Visitor and study application assistance.","docs":"Purpose of travel, financial evidence, biometrics and supporting documents."}];
 module.exports=async(req,res)=>{
  if(!auth(req))return json(res,401,{error:"Please sign in"});
  if(!ready())return json(res,503,{error:"Database is not connected. Configure DATABASE_URL in Vercel."});
@@ -7,7 +8,10 @@ module.exports=async(req,res)=>{
  try{
   if(req.method==="GET"){
    const rows=await db`SELECT content,updated_at FROM dp_site_content WHERE content_key='homepage' LIMIT 1`;
-   return json(res,200,{content:rows[0]?.content||null,updated_at:rows[0]?.updated_at||null});
+   const content=rows[0]?.content||{heroSlides:[],destinations:[]};
+   const saved=Array.isArray(content.destinations)?content.destinations:[];
+   content.destinations=DESTINATION_DEFAULTS.map(d=>({...d,...(saved.find(x=>x.code===d.code)||{}),image:d.image}));
+   return json(res,200,{content,updated_at:rows[0]?.updated_at||null});
   }
   if(req.method!=="PUT")return json(res,405,{error:"Method not allowed"});
   const content=req.body?.content;
