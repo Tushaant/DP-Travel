@@ -187,6 +187,54 @@ header nav>.menu{flex:0 0 auto}
  header nav>.links{white-space:normal}
  header nav>.links>a,header nav>.links .nav-group,header nav>.links .nav-trigger{white-space:normal}
 }
+
+/* DP Travels destination coverflow — isolated to the hero carousel */
+.country-carousel{perspective:1250px;overflow:hidden;isolation:isolate}
+.country-carousel .hero-slides{transform-style:preserve-3d;perspective:1250px}
+.country-carousel .hero-slide{
+  left:12%;right:auto;width:76%;height:100%;overflow:hidden;border-radius:3px;
+  opacity:0;visibility:visible;pointer-events:none;z-index:0;
+  transform:translateX(0) scale(.68) rotateY(0deg);
+  transform-origin:center center;
+  transition:transform .82s cubic-bezier(.2,.75,.2,1),opacity .65s ease,filter .82s ease,box-shadow .82s ease;
+  filter:brightness(.66) saturate(.78);
+  box-shadow:0 14px 35px rgba(0,0,0,.22);
+  backface-visibility:hidden;
+}
+.country-carousel .hero-slide.is-active{
+  opacity:1;z-index:4;pointer-events:auto;transform:translateX(0) scale(1) rotateY(0deg);
+  filter:brightness(1) saturate(.96);box-shadow:0 28px 60px rgba(0,0,0,.36)
+}
+.country-carousel .hero-slide.is-prev,.country-carousel .hero-slide.is-next{
+  opacity:.76;z-index:3;pointer-events:auto;filter:brightness(.72) saturate(.8)
+}
+.country-carousel .hero-slide.is-prev{transform:translateX(-70%) scale(.78) rotateY(27deg);transform-origin:right center}
+.country-carousel .hero-slide.is-next{transform:translateX(70%) scale(.78) rotateY(-27deg);transform-origin:left center}
+.country-carousel .hero-slide.is-far{opacity:0;z-index:1;transform:translateX(0) scale(.62);pointer-events:none}
+.country-carousel .hero-slide:after{transition:opacity .7s ease;opacity:.55}
+.country-carousel .hero-slide.is-active:after{opacity:1}
+.country-carousel .country-title-panel{left:6%;right:6%;min-height:160px;padding:18px 20px}
+.country-carousel .country-title-panel strong{font-size:clamp(2.7rem,6vw,5.4rem)}
+.country-carousel .hero-carousel-controls{z-index:8}
+.country-carousel .hero-arrow{width:40px;height:40px}
+.country-carousel .hero-dots{gap:7px}
+.country-carousel .hero-dots button{transition:width .25s ease,background .25s ease}
+.country-carousel .hero-slide.is-prev,.country-carousel .hero-slide.is-next{cursor:pointer}
+@media(max-width:680px){
+ .country-carousel{perspective:900px}
+ .country-carousel .hero-slide{left:9%;width:82%}
+ .country-carousel .hero-slide.is-prev{transform:translateX(-77%) scale(.76) rotateY(20deg)}
+ .country-carousel .hero-slide.is-next{transform:translateX(77%) scale(.76) rotateY(-20deg)}
+ .country-carousel .country-title-panel{min-height:112px}
+ .country-carousel .country-title-panel strong{font-size:clamp(2.3rem,10vw,3.8rem)}
+ .country-carousel .hero-carousel-controls{right:10px;bottom:10px;gap:7px}
+ .country-carousel .hero-arrow{width:34px;height:34px}
+}
+@media(prefers-reduced-motion:reduce){
+ .country-carousel .hero-slide{transition:none!important;transform:none!important}
+ .country-carousel .hero-slide:not(.is-active){opacity:0!important}
+}
+
 </style>
 </head>
 <body>
@@ -301,7 +349,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
 (()=>{const groups=[...document.querySelectorAll('.nav-group')];groups.forEach(g=>{const b=g.querySelector('.nav-trigger');b.addEventListener('click',()=>{const open=!g.classList.contains('open');groups.forEach(x=>{x.classList.remove('open');x.querySelector('.nav-trigger').setAttribute('aria-expanded','false')});g.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open))})});document.addEventListener('click',e=>{if(!e.target.closest('.nav-group'))groups.forEach(g=>{g.classList.remove('open');g.querySelector('.nav-trigger').setAttribute('aria-expanded','false')})});})();
 </script>
 <script>
-(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const slides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function show(i){active=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('is-active',n===active));dots.forEach((d,n)=>d.setAttribute('aria-pressed',String(n===active)));}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),1500)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);start();})();
+(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const allSlides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null,startX=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function slides(){return allSlides.filter(s=>!s.hidden)}function show(i){const live=slides();if(!live.length)return;active=(i+live.length)%live.length;live.forEach((s,n)=>{s.classList.toggle('is-active',n===active);s.classList.toggle('is-prev',n===(active-1+live.length)%live.length&&live.length>1);s.classList.toggle('is-next',n===(active+1)%live.length&&live.length>1);s.classList.toggle('is-far',n!==active&&n!==(active-1+live.length)%live.length&&n!==(active+1)%live.length);s.setAttribute('aria-hidden',String(n!==active));});dots.forEach((d,n)=>{d.setAttribute('aria-pressed',String(n===active));d.hidden=n>=live.length});}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),4800)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('click',e=>{const card=e.target.closest('.hero-slide.is-prev,.hero-slide.is-next');if(card){show(active+(card.classList.contains('is-next')?1:-1));start()}});root.addEventListener('pointerdown',e=>{startX=e.clientX});root.addEventListener('pointerup',e=>{const dx=e.clientX-startX;if(Math.abs(dx)>45){show(active+(dx<0?1:-1));start()}});root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);show(0);start();})();
 (()=>{const cards=[...document.querySelectorAll('.destination')];if(!cards.length)return;if(!('IntersectionObserver'in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){cards.forEach(c=>c.classList.add('stamp-visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('stamp-visible');io.unobserve(e.target)}}),{threshold:.16});cards.forEach(c=>io.observe(c));})();
 </script>
 <script src="/assets/navigation-public.js" defer></script>
