@@ -29,7 +29,73 @@ function addNote(){const t=trip();t.notes.unshift({id:uid(),text:'A little remin
 function share(){const t=trip();const lines=[t.name,t.destination,fmt(t.start)+(t.end?' – '+fmt(t.end):''),t.travellers+' traveller(s)',''];t.days.forEach((d,i)=>{lines.push('Day '+(i+1)+': '+d.title);d.activities.forEach(a=>lines.push('  '+(a.time?a.time+' · ':'')+a.title+(a.detail?' — '+a.detail:'')))});lines.push('','Planned with DP Travel · https://dptravel.vercel.app/itinerary/');window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener')}
 function print(){window.print()}
 function deleteTrip(){const t=trip();if(confirm('Delete "'+t.name+'" and all its itinerary, checklist and notes from this browser?')){state.trips=state.trips.filter(x=>x.id!==t.id);save();backHome();toast('Trip deleted from this browser')}}
-function bind(){ $('#createTripBtn').addEventListener('click',()=>openTripDialog());$('#backTrips').addEventListener('click',backHome);$('#addDay').addEventListener('click',()=>{const t=trip();t.days.push({id:uid(),title:'A new day',activities:[]});state.activeDay=t.days.length-1;save();renderDays();toast('Day added')});$('#addActivity').addEventListener('click',()=>{const title=prompt('What would you like to add to this day?');if(!title?.trim())return;const time=prompt('Time (optional, e.g. 10:00 AM)')||'';const detail=prompt('A short note (optional)')||'';trip().days[state.activeDay].activities.push({id:uid(),title:title.trim(),time,detail,icon:'✦'});save();renderActivities()});$('#addNote').addEventListener('click',addNote);$('#addChecklist').addEventListener('click',()=>{const text=prompt('Add a preparation task');if(text?.trim()){trip().checklist.push({id:uid(),text:text.trim(),done:false});save();renderChecklist();renderReadiness()}});$('#shareTrip').addEventListener('click',share);$('#printTrip').addEventListener('click',print);$('#deleteTrip').addEventListener('click',deleteTrip);$('#editTrip').addEventListener('click',()=>openTripDialog(true));$$('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));$$('[data-open-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.openTab)));$$('[data-close]').forEach(b=>b.addEventListener('click',()=>$('#'+b.dataset.close).close()));$('#tripForm').addEventListener('submit',e=>{e.preventDefault();const data={name:$('#tripName').value.trim(),destination:$('#tripDestination').value.trim(),start:$('#tripStart').value,end:$('#tripEnd').value,travellers:$('#tripTravellers').value};if(data.start&&data.end&&data.end<data.start){toast('End date must be after start date');return}if(state.editingTrip){const t=trip();Object.assign(t,data);const n=daysBetween(data.start,data.end);while(t.days.length<n)t.days.push({id:uid(),title:'Explore '+data.destination,activities:[]});t.days=t.days.slice(0,n)}else{const t=makeTrip(data);state.trips.unshift(t);state.activeTrip=t.id}save();$('#tripDialog').close();if(state.editingTrip){renderWorkspace();toast('Trip details updated')}else{renderTrips();openTrip(state.activeTrip);toast('Your trip is ready to plan')}})}
+
+function localIdeas(destination,interests,pace,count){
+ const d=destination.toLowerCase();let place=destination;
+ if(/paris|france/.test(d))place='Paris';else if(/rome|ital|florence|venice/.test(d))place='Italy';else if(/tokyo|japan|kyoto/.test(d))place='Japan';else if(/bali|indonesia/.test(d))place='Bali';else if(/dubai/.test(d))place='Dubai';else if(/london|uk/.test(d))place='London';
+ const catalog={
+ sightseeing:[['09:00 AM','Explore a landmark or historic district','Choose a major sight near your accommodation.','✦'],['03:00 PM','Discover a neighbourhood highlight','Allow time to explore nearby streets.','✧']],
+ food:[['12:30 PM','Try a local café or regional restaurant','Check recent reviews and opening hours before visiting.','☕'],['06:30 PM','Enjoy a local food walk','Choose a food street or a small-group tasting.','♨']],
+ nature:[['08:30 AM','Visit a garden or scenic viewpoint','Choose an outdoor stop suited to the weather.','🌿']],
+ culture:[['10:30 AM','Explore a museum or cultural site','Check ticket requirements and opening days.','🏛']],
+ shopping:[['04:00 PM','Browse a local market or shopping district','Leave time for breaks and transport.','◇']],
+ relax:[['05:00 PM','Take a slower scenic break','Choose a park, waterfront or relaxed café.','☼']]
+ };
+ const chosen=interests.length?interests:['sightseeing','food'];let base=[];chosen.forEach(k=>(catalog[k]||[]).forEach(x=>base.push({time:x[0],title:x[1],detail:x[2],icon:x[3]})));
+ if(!base.length)base=[{time:'09:00 AM',title:'Explore '+place,detail:'Start with a central landmark and explore nearby streets.',icon:'✦'}];
+ const n=pace==='relaxed'?2:pace==='packed'?4:3;
+ return Array.from({length:count},(_,i)=>{const items=[];for(let k=0;k<Math.min(n,base.length);k++){const a=base[(i*n+k)%base.length];items.push({...a,time:pace==='relaxed'?['10:00 AM','03:00 PM'][k%2]:a.time,title:i>0&&k===0?'Discover another part of '+place:a.title})}return {day:i,title:i===0?'Arrival & first discoveries':'Explore '+place+' · Day '+(i+1),items}});
+}
+function openAssistant(){if(!trip())return;$('#assistantResults').hidden=true;$('#assistantDialog').showModal()}
+function generateAssistantDraft(){
+ const t=trip();
+ if(!t){toast('Open a trip before generating suggestions.');return}
+ const interests=Array.from(document.querySelectorAll('#assistantForm input[name="interest"]:checked')).map(x=>x.value);
+ const pace=$('#assistantPace').value;
+ const request=$('#assistantPrompt').value.trim();
+ const days=localIdeas(t.destination,interests,pace,t.days.length);
+ const box=$('#assistantResults');
+ box.hidden=false;
+ box.innerHTML='<h3>Your suggested '+days.length+'-day outline</h3><p class="assistant-disclaimer">Local planning template for '+esc(t.destination)+'. These are general suggestions, not live-verified opening hours, availability or route times. '+(request?'Your note: '+esc(request):'')+'</p>'+days.map(d=>'<div class="suggestion-day"><h4>Day '+(d.day+1)+' · '+esc(d.title)+'</h4>'+d.items.map((a,i)=>'<label class="suggestion-item"><input type="checkbox" checked data-suggest-day="'+d.day+'" data-suggest-item="'+i+'"><small>'+esc(a.time)+'</small><span><b>'+esc(a.title)+'</b><br>'+esc(a.detail)+'</span></label>').join('')+'</div>').join('')+'<div class="suggestion-actions"><span id="suggestionFeedback" aria-live="polite">Select activities to add to your trip.</span><button type="button" class="primary-btn" id="applySuggestions">Add selected to itinerary ↗</button></div>';
+ $('#applySuggestions').addEventListener('click',()=>{
+   const selected=Array.from(box.querySelectorAll('input[data-suggest-day]:checked'));
+   if(!selected.length){$('#suggestionFeedback').textContent='Select at least one activity first.';return}
+   let added=0;
+   selected.forEach(el=>{
+     const di=Number(el.dataset.suggestDay),ai=Number(el.dataset.suggestItem);
+     const suggestion=days[di]?.items[ai],target=t.days[di];
+     if(!suggestion||!target)return;
+     target.title=days[di].title;
+     target.activities=target.activities||[];
+     target.activities.push({id:uid(),title:suggestion.title,time:suggestion.time,detail:suggestion.detail,icon:suggestion.icon});
+     added++;
+   });
+   if(!added){$('#suggestionFeedback').textContent='No activities could be added. Please try again.';return}
+   save();
+   state.activeDay=Number(selected[0].dataset.suggestDay);
+   renderWorkspace();
+   setTab('itinerary');
+   const success=document.createElement('div');
+   success.className='assistant-success';
+   success.setAttribute('role','status');
+   success.innerHTML='<strong>✓ Your itinerary is updated</strong><span>'+added+' '+(added===1?'activity':'activities')+' added successfully. Your trip is saved on this device.</span>';
+   const form=$('#assistantForm');
+   form.querySelector('.assistant-success')?.remove();
+   form.prepend(success);
+   const apply=$('#applySuggestions');
+   if(apply){apply.disabled=true;apply.textContent='Added ✓'}
+   window.setTimeout(()=>{
+     const dialog=$('#assistantDialog');
+     if(dialog.open)dialog.close();
+     success.remove();
+     toast(added+' '+(added===1?'activity':'activities')+' added to your itinerary.');
+     const activeDay=$('#dayList [data-day="'+state.activeDay+'"]');
+     activeDay?.scrollIntoView({behavior:'smooth',block:'nearest'});
+   },850);
+ });
+}
+
+function bind(){ $('#createTripBtn').addEventListener('click',()=>openTripDialog());$('#backTrips').addEventListener('click',backHome);$('#addDay').addEventListener('click',()=>{const t=trip();t.days.push({id:uid(),title:'A new day',activities:[]});state.activeDay=t.days.length-1;save();renderDays();toast('Day added')});$('#addActivity').addEventListener('click',()=>{const title=prompt('What would you like to add to this day?');if(!title?.trim())return;const time=prompt('Time (optional, e.g. 10:00 AM)')||'';const detail=prompt('A short note (optional)')||'';trip().days[state.activeDay].activities.push({id:uid(),title:title.trim(),time,detail,icon:'✦'});save();renderActivities()});$('#addNote').addEventListener('click',addNote);$('#openAssistant').addEventListener('click',openAssistant);$('#assistantForm').addEventListener('submit',e=>{e.preventDefault();try{generateAssistantDraft()}catch(err){console.error('Trip assistant error:',err);const box=$('#assistantResults');box.hidden=false;box.innerHTML='<p class="assistant-disclaimer">We could not create suggestions this time. Please check your trip details and try again.</p>';}});$('#addChecklist').addEventListener('click',()=>{const text=prompt('Add a preparation task');if(text?.trim()){trip().checklist.push({id:uid(),text:text.trim(),done:false});save();renderChecklist();renderReadiness()}});$('#shareTrip').addEventListener('click',share);$('#printTrip').addEventListener('click',print);$('#deleteTrip').addEventListener('click',deleteTrip);$('#editTrip').addEventListener('click',()=>openTripDialog(true));$$('.tab').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));$$('[data-open-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.openTab)));$$('[data-close]').forEach(b=>b.addEventListener('click',()=>$('#'+b.dataset.close).close()));$('#tripForm').addEventListener('submit',e=>{e.preventDefault();const data={name:$('#tripName').value.trim(),destination:$('#tripDestination').value.trim(),start:$('#tripStart').value,end:$('#tripEnd').value,travellers:$('#tripTravellers').value};if(data.start&&data.end&&data.end<data.start){toast('End date must be after start date');return}if(state.editingTrip){const t=trip();Object.assign(t,data);const n=daysBetween(data.start,data.end);while(t.days.length<n)t.days.push({id:uid(),title:'Explore '+data.destination,activities:[]});t.days=t.days.slice(0,n)}else{const t=makeTrip(data);state.trips.unshift(t);state.activeTrip=t.id}save();$('#tripDialog').close();if(state.editingTrip){renderWorkspace();toast('Trip details updated')}else{renderTrips();openTrip(state.activeTrip);toast('Your trip is ready to plan')}})}
 window.addEventListener('beforeprint',()=>$('.tab-panel').forEach(p=>p.hidden=false));window.addEventListener('afterprint',()=>{const active=$('.tab.active')?.dataset.tab||'itinerary';setTab(active)});
 load();bind();renderTrips();
 })();
