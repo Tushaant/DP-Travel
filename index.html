@@ -374,6 +374,20 @@ header nav>.menu{flex:0 0 auto}
 .testimonial-preview-note{color:#80543a!important}
 @media(max-width:600px){.testimonials{padding:66px 0!important}}
 
+
+/* Remove testimonial frame; align with the full-width homepage section rhythm */
+.testimonials{width:100%;padding:clamp(64px,7vw,104px) 0!important;background:#f5f1e9!important}
+.testimonials .wrap{width:min(1200px,calc(100% - 64px));max-width:1200px;margin-inline:auto}
+.testimonial-shell{width:100%;max-width:none;margin:0;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important}
+.testimonial-shell:before,.testimonial-shell:after{display:none!important}
+.testimonial-heading{max-width:760px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1.02}
+.testimonial-intro{max-width:700px}
+.testimonial-track{margin:64px 0 34px;gap:24px}
+.testimonial-card{min-height:250px;padding:58px 28px 28px;border-radius:18px}
+.testimonial-controls{margin-top:4px}
+@media(max-width:850px){.testimonials .wrap{width:min(100% - 40px,720px)}}
+@media(max-width:600px){.testimonials{padding:58px 0!important}.testimonials .wrap{width:calc(100% - 32px)}.testimonial-track{margin-top:56px;gap:14px}.testimonial-card{min-height:245px;padding:54px 22px 24px}}
+
 </style>
 </head>
 <body>
