@@ -25,12 +25,14 @@
 <a class="side-link active" href="#overview" data-section="overview"><span class="side-icon">⌂</span>Overview</a>
 <a class="side-link" href="#hero" data-section="hero"><span class="side-icon">▧</span>Hero carousel</a>
 <a class="side-link" href="#destinations-section" data-section="destinations-section"><span class="side-icon">◎</span>Destinations</a>
+<a class="side-link" href="#navigation" data-section="navigation"><span class="side-icon">☷</span>Website navigation</a>
 <a class="side-link" href="#publishing" data-section="publishing"><span class="side-icon">↑</span>Publishing</a>
 </aside>
 <div class="content-main">
 <div class="notice" id="overview"><b>Direct publishing:</b> Save publishes your edits to the website content database. The live website reads this content automatically. Current image fields accept HTTPS image URLs; direct file uploads will be enabled after secure media storage is configured.</div>
 <section class="section" id="hero"><h2>Homepage hero carousel</h2><p class="intro">Manage the large featured images and country titles at the top of the homepage.</p><div id="slides"></div><p class="intro">The carousel is configured for nine positions to preserve the existing homepage animation and controls.</p></section>
 <section class="section" id="destinations-section"><h2>Featured destinations</h2><p class="intro">Manage destination cards, summaries, image URLs and supporting guidance.</p><div id="destinations"></div><button class="btn" id="addDestination">+ Add destination</button></section>
+<section class="section" id="navigation"><h2>Website navigation</h2><p class="intro">Manage the existing Attestation, Verification and Embassy categories, their subcategories and page links. Add, rename, reorder by editing, or remove entries. Deletions require confirmation.</p><div class="toolbar"><button class="btn" id="addNavigationCategory">+ Add category</button><button class="btn" id="saveNavigationDraft">Save draft</button><button class="btn primary" id="publishNavigation">Publish navigation</button><span class="status" id="navigationStatus"></span></div><div id="navigationEditor"></div></section>
 <div class="toolbar publish-panel" id="publishing"><button class="btn primary" id="save">Publish changes</button><button class="btn" id="reload">Discard local edits</button><span class="status" id="status"></span></div>
 </div></div></div></main>
 <script>
@@ -70,4 +72,4 @@ $("#menuToggle").onclick=()=>{const open=$("#sidebar").classList.toggle("open");
 $("#save").onclick=async()=>{collect();$("#status").textContent="Publishing…";const r=await fetch("/api/admin-content",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({content})});const d=await r.json();$("#status").textContent=r.ok?"Published successfully · "+new Date().toLocaleTimeString():d.error||"Publish failed";if(!r.ok)alert(d.error||"Publish failed")};
 $("#reload").onclick=()=>load().catch(e=>alert(e.message));$("#logout").onclick=async()=>{await fetch("/api/admin-logout",{method:"POST"});location.href="/admin/"};
 load().catch(e=>{$("#loginError").textContent=e.message;$("#login").hidden=false});
-</script></body></html>
+</script><script src="/assets/admin-navigation-cms.js" defer></script></body></html>

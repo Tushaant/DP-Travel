@@ -1,1 +1,0 @@
-module.exports=async(req,res)=>{if(req.method!=="POST")return res.status(405).end();res.setHeader("Set-Cookie","dp_admin=; HttpOnly; Secure; SameSite=Strict; Path=/api; Max-Age=0");res.setHeader("Cache-Control","no-store");res.status(200).json({ok:true})};
