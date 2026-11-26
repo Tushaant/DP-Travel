@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS dp_travel_navigation (id INTEGER PRIMARY KEY CHECK (id=1), draft_content JSONB NOT NULL, published_content JSONB, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), published_at TIMESTAMPTZ);
