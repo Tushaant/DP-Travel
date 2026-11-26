@@ -74,9 +74,24 @@ function generateAssistantDraft(){
    save();
    state.activeDay=Number(selected[0].dataset.suggestDay);
    renderWorkspace();
-   $('#assistantDialog').close();
    setTab('itinerary');
-   toast(added+' activities added to your itinerary.');
+   const success=document.createElement('div');
+   success.className='assistant-success';
+   success.setAttribute('role','status');
+   success.innerHTML='<strong>✓ Your itinerary is updated</strong><span>'+added+' '+(added===1?'activity':'activities')+' added successfully. Your trip is saved on this device.</span>';
+   const form=$('#assistantForm');
+   form.querySelector('.assistant-success')?.remove();
+   form.prepend(success);
+   const apply=$('#applySuggestions');
+   if(apply){apply.disabled=true;apply.textContent='Added ✓'}
+   window.setTimeout(()=>{
+     const dialog=$('#assistantDialog');
+     if(dialog.open)dialog.close();
+     success.remove();
+     toast(added+' '+(added===1?'activity':'activities')+' added to your itinerary.');
+     const activeDay=$('#dayList [data-day="'+state.activeDay+'"]');
+     activeDay?.scrollIntoView({behavior:'smooth',block:'nearest'});
+   },850);
  });
 }
 
