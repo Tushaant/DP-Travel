@@ -331,6 +331,63 @@ header nav>.menu{flex:0 0 auto}
  .country-carousel .hero-slide{transition:none!important}
 }
 
+
+/* Client testimonials — DP Travel palette */
+.testimonials{background:var(--paper);position:relative;overflow:hidden}
+.testimonials .section-head{margin-bottom:36px}
+.testimonial-shell{background:linear-gradient(135deg,#172b22,#20372c);color:#f5f1e9;padding:clamp(28px,5vw,64px);position:relative;overflow:hidden}
+.testimonial-shell:before,.testimonial-shell:after{content:"";position:absolute;border:1px solid rgba(189,146,91,.24);border-radius:50%;width:360px;height:360px;pointer-events:none}
+.testimonial-shell:before{top:-245px;right:-100px}.testimonial-shell:after{bottom:-285px;left:-130px}
+.testimonial-kicker{color:#d7b98f}.testimonial-heading{color:#f5f1e9;max-width:650px;margin:12px 0 14px}.testimonial-intro{color:#d5ddd5;max-width:620px}
+.testimonial-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:62px 0 30px;position:relative;z-index:1}
+.testimonial-card{position:relative;min-width:0;padding:54px 24px 25px;border:1px solid rgba(245,241,233,.42);border-radius:24px;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.055));text-align:center;display:flex;flex-direction:column;align-items:center;box-shadow:0 14px 34px rgba(0,0,0,.13)}
+.testimonial-avatar{position:absolute;top:-34px;width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid #f5f1e9;background:#d8d0c2;box-shadow:0 7px 20px #0003}
+.testimonial-quote{color:#f2eee5;font-size:.88rem;line-height:1.75;margin:0 0 22px;max-width:42ch}
+.testimonial-stars{color:#e0bd8d;letter-spacing:.15em;font-size:.9rem;margin-bottom:10px}
+.testimonial-name{font:600 1.5rem var(--serif);color:#e0bd8d;margin-top:auto}
+.testimonial-meta{color:#d0d8cf;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.testimonial-controls{display:flex;justify-content:center;gap:12px;position:relative;z-index:1}
+.testimonial-arrow{width:46px;height:46px;border:1px solid rgba(245,241,233,.65);border-radius:50%;background:rgba(245,241,233,.14);color:#f5f1e9;cursor:pointer;font-size:1.4rem;transition:.2s}
+.testimonial-arrow:hover{background:#bd925b;border-color:#bd925b;color:#17231d}
+.testimonial-empty{display:none}
+@media(max-width:850px){.testimonial-track{grid-template-columns:repeat(2,minmax(0,1fr))}.testimonial-card:nth-child(3){display:none}}
+@media(max-width:600px){.testimonial-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 18px;margin-top:55px}.testimonial-card{flex:0 0 88%;scroll-snap-align:center}.testimonial-card:nth-child(3){display:flex}.testimonial-shell{padding:30px 18px}.testimonial-heading{font-size:2.8rem}}
+@media(prefers-reduced-motion:reduce){.testimonial-arrow{transition:none}}
+
+.testimonial-preview-note{grid-column:1/-1;text-align:center;color:#f0d6a8;font-size:.68rem;font-weight:700;letter-spacing:.12em;margin:-36px 0 4px;position:relative;z-index:2}
+
+/* Testimonials palette refinement: match DP Travel's warm cream surfaces */
+.testimonials{background:#f5f1e9!important;color:#17231d;padding:88px 0!important}
+.testimonial-shell{background:#f5f1e9!important;color:#17231d!important;border:1px solid rgba(32,55,44,.16);box-shadow:0 18px 50px rgba(23,35,29,.08)}
+.testimonial-shell:before,.testimonial-shell:after{border-color:rgba(153,101,70,.17)}
+.testimonial-kicker{color:#996546!important}
+.testimonial-heading{color:#17231d!important}
+.testimonial-intro{color:#625d55!important}
+.testimonial-card{background:#fbf8f2!important;border:1px solid rgba(32,55,44,.24)!important;box-shadow:0 12px 30px rgba(23,35,29,.08)!important}
+.testimonial-avatar{border-color:#f5f1e9!important;background:#e7dfd2!important;box-shadow:0 5px 16px rgba(23,35,29,.15)}
+.testimonial-quote{color:#4e514a!important}
+.testimonial-stars{color:#996546!important}
+.testimonial-name{color:#996546!important}
+.testimonial-meta{color:#71675e!important}
+.testimonial-arrow{background:#ebe4d8!important;border-color:rgba(32,55,44,.35)!important;color:#17231d!important}
+.testimonial-arrow:hover{background:#20372c!important;border-color:#20372c!important;color:#f5f1e9!important}
+.testimonial-preview-note{color:#80543a!important}
+@media(max-width:600px){.testimonials{padding:66px 0!important}}
+
+
+/* Remove testimonial frame; align with the full-width homepage section rhythm */
+.testimonials{width:100%;padding:clamp(64px,7vw,104px) 0!important;background:#f5f1e9!important}
+.testimonials .wrap{width:min(1200px,calc(100% - 64px));max-width:1200px;margin-inline:auto}
+.testimonial-shell{width:100%;max-width:none;margin:0;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;overflow:visible!important}
+.testimonial-shell:before,.testimonial-shell:after{display:none!important}
+.testimonial-heading{max-width:760px;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1.02}
+.testimonial-intro{max-width:700px}
+.testimonial-track{margin:64px 0 34px;gap:24px}
+.testimonial-card{min-height:250px;padding:58px 28px 28px;border-radius:18px}
+.testimonial-controls{margin-top:4px}
+@media(max-width:850px){.testimonials .wrap{width:min(100% - 40px,720px)}}
+@media(max-width:600px){.testimonials{padding:58px 0!important}.testimonials .wrap{width:calc(100% - 32px)}.testimonial-track{margin-top:56px;gap:14px}.testimonial-card{min-height:245px;padding:54px 22px 24px}}
+
 </style>
 </head>
 <body>
@@ -381,6 +438,7 @@ header nav>.menu{flex:0 0 auto}
 <article class="service"><span class="num">04 / PERSONAL ASSISTANCE</span><h3>A real person at every step.</h3><p>Dedicated guidance and coordination throughout your application journey.</p><a href="services/contact.html">Talk to our team <span>↗</span></a></article>
 </div></div></div></section>
 <section class="checklist-promo"><div class="wrap checklist-promo-inner"><div><div class="eyebrow">Your next step, made simple</div><h2>Not sure what documents<br>you need to prepare?</h2><p>Choose your passport, destination and travel purpose. Build a practical checklist you can tick off, print and discuss with our team.</p></div><a class="btn" href="/checklist/">Build my checklist <span class="arrow">↗</span></a></div></section>
+<section class="testimonials" id="testimonials" hidden><div class="wrap"><div class="testimonial-shell"><div class="eyebrow testimonial-kicker" id="testimonialEyebrow">Stories from our clients</div><h2 class="testimonial-heading" id="testimonialHeading">A little trust goes a long way.</h2><p class="testimonial-intro" id="testimonialIntro">Experiences shared by clients who have travelled with DP Travel.</p><div class="testimonial-track" id="testimonialTrack" aria-live="polite"></div><div class="testimonial-controls"><button class="testimonial-arrow" type="button" id="testimonialPrev" aria-label="Previous testimonials">‹</button><button class="testimonial-arrow" type="button" id="testimonialNext" aria-label="Next testimonials">›</button></div></div></div></section>
 <section class="passport" id="stamps"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Your destination passport</div><h2 style="margin-top:14px">Collect places.<br>Unlock stamps.</h2></div><p>Every destination has a story. Explore the places we can help you reach and start with the right guidance.</p></div>
 <div class="passport-book" aria-label="Destination passport collection">
 <div class="passport-book-head"><div><span class="eyebrow">The destination collection</span><strong>05 <small>featured guides</small></strong></div><div class="passport-book-note">A little inspiration for the places waiting beyond your next page.</div><div class="passport-seal" aria-hidden="true">DP<br><b>TRAVEL</b></div></div>
@@ -409,9 +467,34 @@ const D=[
 ];
 const $=s=>document.querySelector(s);const wa=t=>`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(t)}`;
 $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>`<option>${x.n}</option>`).join("")+'<option>Other country</option>';
-$("#rail").innerHTML=D.map((x,i)=>`<button class="destination" type="button" data-i="${i}" aria-pressed="${i===0}"><div class="destination-image"><img src="${x.image}" alt="${x.n} destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>${x.c}</b>Collection</span></span></div><div class="destination-copy"><h3>${x.n}</h3><p>${x.short}</p></div></button>`).join("");
+$("#rail").innerHTML=D.map((x,i)=>`<button class="destination" type="button" data-i="${i}" aria-pressed="${i===0}"><div class="destination-image"><img src="${x.image||x.fallbackImage}" data-fallback="${x.fallbackImage||""}" alt="${x.n} destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>${x.c}</b>Collection</span></span></div><div class="destination-copy"><h3>${x.n}</h3><p>${x.short}</p></div></button>`).join("");
 function show(i){const x=D[i];document.querySelectorAll(".destination").forEach((b,j)=>b.setAttribute("aria-pressed",String(i===j)));$("#detail").innerHTML=`<div><div class="eyebrow">Destination file · ${x.c}</div><h3>${x.n}</h3></div><p><strong style="color:#e0bd8d">Services</strong><br>${x.services}<br><br><strong style="color:#e0bd8d">Start with</strong><br>${x.docs}</p><a class="btn detail-action" href="#inquiry">Discuss this destination ↗</a>`}
 document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));show(0);
+
+// Published client testimonials are delivered by the serverless CMS endpoint.
+function renderTestimonials(cms){
+ const section=document.getElementById("testimonials"),track=document.getElementById("testimonialTrack");
+ if(!section||!track)return;
+ const published=(Array.isArray(cms.testimonials)?cms.testimonials:[]).filter(x=>x.status==="published");
+ const usingPreviewSamples=!published.length&&Array.isArray(cms.previewTestimonials);
+ const items=(published.length?published:(usingPreviewSamples?cms.previewTestimonials:[])).sort((a,b)=>(Number(a.sortOrder)||0)-(Number(b.sortOrder)||0));
+ if(!items.length){section.hidden=true;return}
+ const settings=cms.testimonialSettings||{};
+ document.getElementById("testimonialEyebrow").textContent=settings.eyebrow||"Stories from our clients";
+ document.getElementById("testimonialHeading").textContent=settings.heading||"A little trust goes a long way.";
+ document.getElementById("testimonialIntro").textContent=settings.description||"Experiences shared by clients who have travelled with DP Travel.";
+ const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ track.innerHTML=(usingPreviewSamples?'<div class="testimonial-preview-note">ILLUSTRATIVE PREVIEW — THESE ARE NOT CUSTOMER REVIEWS</div>':'')+items.map(x=>'<article class="testimonial-card">'+(x.avatar?'<img class="testimonial-avatar" src="'+safe(x.avatar)+'" alt="'+safe(x.clientName)+'" loading="lazy">':'<div class="testimonial-avatar" aria-hidden="true"></div>')+(x.rating?'<div class="testimonial-stars" aria-label="'+safe(x.rating)+' out of 5 stars">'+ '★'.repeat(Number(x.rating))+'</div>':'')+'<p class="testimonial-quote">“'+safe(x.quote)+'”</p><div class="testimonial-name">'+safe(x.clientName)+'</div><div class="testimonial-meta">'+[x.role,x.destination,x.service].filter(Boolean).map(safe).join(" · ")+'</div></article>').join("");
+ section.hidden=false;
+ const cards=[...track.children];let page=0;
+ const visible=()=>window.matchMedia("(max-width:600px)").matches?1:window.matchMedia("(max-width:850px)").matches?2:3;
+ const move=delta=>{const count=visible(),max=Math.max(0,cards.length-count);page=(page+delta+max+1)%(max+1);track.scrollTo({left:cards[page]?.offsetLeft-track.offsetLeft,behavior:window.matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})};
+ document.getElementById("testimonialPrev").onclick=()=>move(-1);
+ document.getElementById("testimonialNext").onclick=()=>move(1);
+ document.getElementById("testimonialPrev").hidden=cards.length<=visible();
+ document.getElementById("testimonialNext").hidden=cards.length<=visible();
+}
+
 // Custom DP Travel CMS: published content overrides these safe built-in defaults.
 (async()=>{
  try{
@@ -419,17 +502,20 @@ document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",
   if(!response.ok)return;
   const payload=await response.json(),cms=payload.content;
   if(!cms)return;
+  renderTestimonials(cms);
   if(Array.isArray(cms.heroSlides)){
    const slides=[...document.querySelectorAll("#heroCarousel .hero-slide")],dots=[...document.querySelectorAll("#heroCarousel .hero-dots button")];
    slides.forEach((node,i)=>{const item=cms.heroSlides[i];node.hidden=!item;if(!item)return;const img=node.querySelector("img");if(img){img.src=item.image;img.alt=item.alt||item.title;img.removeAttribute("fetchpriority")}const title=node.querySelector(".country-title-panel strong"),eyebrow=node.querySelector(".country-title-panel span");if(title)title.textContent=item.title;if(eyebrow)eyebrow.textContent=item.eyebrow||"Discover the world";node.classList.toggle("is-active",i===0)});
    dots.forEach((dot,i)=>{dot.hidden=i>=cms.heroSlides.length;dot.setAttribute("aria-label","Show "+(cms.heroSlides[i]?.title||"destination"));dot.setAttribute("aria-pressed",String(i===0))});
   }
   if(Array.isArray(cms.destinations)&&cms.destinations.length){
-   const mapped=cms.destinations.map(x=>({c:x.code,n:x.name,short:x.short,image:x.image,services:x.services,docs:x.docs}));
+   const builtInDestinations=D.slice();
+   const mapped=cms.destinations.map((x,i)=>({c:x.code||builtInDestinations[i%builtInDestinations.length]?.c||"DP",n:x.name||builtInDestinations[i%builtInDestinations.length]?.n||"Destination",short:x.short||builtInDestinations[i%builtInDestinations.length]?.short||"",image:x.image||builtInDestinations[i%builtInDestinations.length]?.image||"",fallbackImage:builtInDestinations[i%builtInDestinations.length]?.image||"",services:x.services,docs:x.docs}));
    D.splice(0,D.length,...mapped);
    $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>'<option>'+x.n+'</option>').join("")+'<option>Other country</option>';
    $("#rail").innerHTML=D.map((x,i)=>'<button class="destination" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'"><div class="destination-image"><img src="'+x.image.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'" alt="'+x.n.replace(/"/g,"&quot;")+' destination" loading="lazy"><span class="stamp-ring"><span>DP Travel<b>'+x.c+'</b>Collection</span></span></div><div class="destination-copy"><h3>'+x.n+'</h3><p>'+x.short+'</p></div></button>').join("");
    document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));
+   document.querySelectorAll(".destination-image img").forEach(img=>img.addEventListener("error",()=>{const fallback=img.dataset.fallback;if(fallback){img.src=fallback;img.removeAttribute("data-fallback")}else{img.style.visibility="hidden"}},{once:true}));
    show(0);
   }
  }catch(error){console.warn("CMS content unavailable; showing built-in website content.",error)}
