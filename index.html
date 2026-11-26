@@ -354,6 +354,7 @@ header nav>.menu{flex:0 0 auto}
 @media(max-width:600px){.testimonial-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 18px;margin-top:55px}.testimonial-card{flex:0 0 88%;scroll-snap-align:center}.testimonial-card:nth-child(3){display:flex}.testimonial-shell{padding:30px 18px}.testimonial-heading{font-size:2.8rem}}
 @media(prefers-reduced-motion:reduce){.testimonial-arrow{transition:none}}
 
+.testimonial-preview-note{grid-column:1/-1;text-align:center;color:#f0d6a8;font-size:.68rem;font-weight:700;letter-spacing:.12em;margin:-36px 0 4px;position:relative;z-index:2}
 </style>
 </head>
 <body>
@@ -441,14 +442,16 @@ document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",
 function renderTestimonials(cms){
  const section=document.getElementById("testimonials"),track=document.getElementById("testimonialTrack");
  if(!section||!track)return;
- const items=(Array.isArray(cms.testimonials)?cms.testimonials:[]).filter(x=>x.status==="published").sort((a,b)=>(Number(a.sortOrder)||0)-(Number(b.sortOrder)||0));
+ const published=(Array.isArray(cms.testimonials)?cms.testimonials:[]).filter(x=>x.status==="published");
+ const usingPreviewSamples=!published.length&&Array.isArray(cms.previewTestimonials);
+ const items=(published.length?published:(usingPreviewSamples?cms.previewTestimonials:[])).sort((a,b)=>(Number(a.sortOrder)||0)-(Number(b.sortOrder)||0));
  if(!items.length){section.hidden=true;return}
  const settings=cms.testimonialSettings||{};
  document.getElementById("testimonialEyebrow").textContent=settings.eyebrow||"Stories from our clients";
  document.getElementById("testimonialHeading").textContent=settings.heading||"A little trust goes a long way.";
  document.getElementById("testimonialIntro").textContent=settings.description||"Experiences shared by clients who have travelled with DP Travel.";
  const safe=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
- track.innerHTML=items.map(x=>'<article class="testimonial-card">'+(x.avatar?'<img class="testimonial-avatar" src="'+safe(x.avatar)+'" alt="'+safe(x.clientName)+'" loading="lazy">':'<div class="testimonial-avatar" aria-hidden="true"></div>')+(x.rating?'<div class="testimonial-stars" aria-label="'+safe(x.rating)+' out of 5 stars">'+ '★'.repeat(Number(x.rating))+'</div>':'')+'<p class="testimonial-quote">“'+safe(x.quote)+'”</p><div class="testimonial-name">'+safe(x.clientName)+'</div><div class="testimonial-meta">'+[x.role,x.destination,x.service].filter(Boolean).map(safe).join(" · ")+'</div></article>').join("");
+ track.innerHTML=(usingPreviewSamples?'<div class="testimonial-preview-note">ILLUSTRATIVE PREVIEW — THESE ARE NOT CUSTOMER REVIEWS</div>':'')+items.map(x=>'<article class="testimonial-card">'+(x.avatar?'<img class="testimonial-avatar" src="'+safe(x.avatar)+'" alt="'+safe(x.clientName)+'" loading="lazy">':'<div class="testimonial-avatar" aria-hidden="true"></div>')+(x.rating?'<div class="testimonial-stars" aria-label="'+safe(x.rating)+' out of 5 stars">'+ '★'.repeat(Number(x.rating))+'</div>':'')+'<p class="testimonial-quote">“'+safe(x.quote)+'”</p><div class="testimonial-name">'+safe(x.clientName)+'</div><div class="testimonial-meta">'+[x.role,x.destination,x.service].filter(Boolean).map(safe).join(" · ")+'</div></article>').join("");
  section.hidden=false;
  const cards=[...track.children];let page=0;
  const visible=()=>window.matchMedia("(max-width:600px)").matches?1:window.matchMedia("(max-width:850px)").matches?2:3;
