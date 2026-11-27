@@ -665,11 +665,13 @@ header nav > .nav-cta {color:#0D1B2A!important}
  --dp-navy:#0D1B2A;
  position:relative;isolation:isolate
 }
+/* Destination image is deliberately visible behind the entire hero; navy overlays preserve copy contrast. */
 .hero-photo-backdrop{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--dp-navy)}
-.hero-photo-backdrop-layer{position:absolute;inset:-28px;background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(22px) brightness(.25) saturate(.8);opacity:0;transform:scale(1.08);transition:opacity 900ms ease}
-.hero-photo-backdrop-layer.is-visible{opacity:.62}
-.hero-photo-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,42,.96) 0%,rgba(13,27,42,.84) 48%,rgba(13,27,42,.76) 100%),linear-gradient(0deg,rgba(13,27,42,.32),rgba(13,27,42,.32))}
-.hero-grid{position:relative;z-index:1;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:center!important;gap:clamp(34px,5vw,76px)!important}
+.hero-photo-backdrop-layer{position:absolute;inset:-34px;background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(13px) brightness(.48) saturate(.9);opacity:0;transform:scale(1.1);transition:opacity 900ms ease}
+.hero-photo-backdrop-layer.is-visible{opacity:.88}
+.hero-photo-backdrop:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,27,42,.91) 0%,rgba(13,27,42,.78) 38%,rgba(13,27,42,.56) 100%),linear-gradient(0deg,rgba(13,27,42,.48),rgba(13,27,42,.28))}
+.hero:before,.hero:after{z-index:1!important;pointer-events:none}
+.hero-grid{position:relative;z-index:2;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:center!important;gap:clamp(34px,5vw,76px)!important}
 .hero-visual.country-carousel{position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;justify-self:end!important;width:100%!important;max-width:650px!important;height:calc(var(--dp-card-h) + 88px)!important;min-width:0!important;overflow:visible!important;perspective:none!important;background:transparent!important;border:0!important;box-shadow:none!important}
 .hero-visual.country-carousel:after{display:none!important}
 .dp-destination-track{position:relative;width:100%;height:var(--dp-card-h);overflow:visible;isolation:isolate}
