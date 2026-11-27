@@ -559,6 +559,43 @@ header nav > .links > .nav-group > .nav-trigger:hover {
   header nav > .links {font-size:.68rem}
 }
 
+
+/* Definitive header type scale: every top-level navigation label uses one size */
+header nav > .links {font-size:15px!important;line-height:1!important}
+header nav > .links > a,
+header nav > .links > .nav-group > .nav-trigger {
+  font-family:var(--sans)!important;
+  font-size:15px!important;
+  font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+  padding:0!important;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+}
+header nav > .nav-cta {
+  font-family:var(--sans)!important;
+  font-size:15px!important;
+  font-weight:600!important;
+  line-height:1!important;
+}
+header nav > .links > .nav-group > .nav-trigger:after {
+  font-size:12px!important;
+  line-height:1!important;
+}
+@media(min-width:681px) and (max-width:1240px) {
+  header nav > .links,
+  header nav > .links > a,
+  header nav > .links > .nav-group > .nav-trigger,
+  header nav > .nav-cta {font-size:14px!important}
+}
+@media(max-width:680px) {
+  header nav > .links > a,
+  header nav > .links > .nav-group > .nav-trigger {font-size:15px!important}
+}
+
 </style>
 </head>
 <body>
