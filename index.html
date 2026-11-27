@@ -517,6 +517,48 @@ header nav>.menu{flex:0 0 auto}
   }
 }
 
+
+/* Normalize top-level header typography across links and dropdown triggers */
+header nav > .links {
+  font-family:var(--sans);
+  font-size:clamp(.68rem,.72vw,.74rem);
+  font-weight:600;
+  line-height:1;
+  letter-spacing:0;
+  color:#5e5a52;
+}
+header nav > .links > a,
+header nav > .links > .nav-group > .nav-trigger {
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:0;
+  margin:0;
+  font-family:var(--sans);
+  font-size:inherit;
+  font-weight:600;
+  line-height:1;
+  letter-spacing:0;
+  text-transform:none;
+  color:inherit;
+  white-space:nowrap;
+}
+header nav > .links > .nav-group > .nav-trigger:after {
+  font:inherit;
+  line-height:1;
+  margin-left:6px;
+}
+header nav > .links > a:hover,
+header nav > .links > .nav-group > .nav-trigger:hover {
+  color:var(--terracotta);
+}
+@media(min-width:981px) and (max-width:1240px) {
+  header nav > .links {font-size:.66rem}
+}
+@media(min-width:681px) and (max-width:980px) {
+  header nav > .links {font-size:.68rem}
+}
+
 </style>
 </head>
 <body>
