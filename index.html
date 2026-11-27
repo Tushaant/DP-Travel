@@ -817,6 +817,103 @@ header nav > .nav-cta {color:#0D1B2A!important}
  .country-carousel .hero-slide,.country-carousel .hero-slide .hero-photo{transition:none!important;will-change:auto}
 }
 
+
+/* Corrected destination collage: centered five-card rail, readable labels, no stamp collision */
+.hero-grid{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)!important;gap:clamp(28px,4vw,64px)!important}
+.hero-visual.country-carousel{
+  height:580px!important;min-width:0;overflow:hidden!important;position:relative!important;
+  perspective:1500px;background:rgba(8,18,30,.22);border:1px solid rgba(212,175,55,.24);
+  box-shadow:0 24px 70px rgba(0,0,0,.24);isolation:isolate
+}
+.hero-visual.country-carousel:after{display:none!important}
+.country-carousel .hero-slides{position:absolute!important;inset:0!important;overflow:visible;transform-style:preserve-3d}
+.country-carousel .hero-slide{
+  position:absolute!important;inset:auto!important;left:50%!important;top:50%!important;
+  right:auto!important;bottom:auto!important;width:34%!important;height:68%!important;
+  margin:0!important;padding:0!important;overflow:hidden!important;border-radius:10px!important;
+  border:1px solid rgba(247,243,233,.24)!important;background:#132338;
+  opacity:0!important;visibility:visible!important;pointer-events:none!important;
+  transform:translate3d(-50%,-50%,-240px) scale(.58)!important;
+  filter:brightness(.82) saturate(.92)!important;backface-visibility:hidden;
+  box-shadow:0 18px 42px rgba(0,0,0,.3)!important;
+  transition:transform 850ms cubic-bezier(.2,.72,.2,1),opacity 650ms ease,filter 650ms ease!important;
+  will-change:transform,opacity
+}
+.country-carousel .hero-slide .hero-photo{
+  display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;
+  object-position:center!important;filter:none!important;transform:scale(1.025)!important;
+  transition:transform 5s ease!important
+}
+.country-carousel .hero-slide:after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,12,22,.02) 35%,rgba(4,12,22,.76) 100%)!important
+}
+.country-carousel .hero-slide.is-active{
+  opacity:1!important;z-index:10!important;pointer-events:auto!important;
+  transform:translate3d(-50%,-50%,110px) scale(1)!important;
+  filter:brightness(1) saturate(1)!important
+}
+.country-carousel .hero-slide.is-active .hero-photo{transform:scale(1.025)!important}
+.country-carousel .hero-slide.is-prev{
+  opacity:.88!important;z-index:8!important;
+  transform:translate3d(-132%,-46%,-65px) scale(.82) rotateY(9deg)!important
+}
+.country-carousel .hero-slide.is-next{
+  opacity:.88!important;z-index:8!important;
+  transform:translate3d(32%,-54%,-65px) scale(.82) rotateY(-9deg)!important
+}
+.country-carousel .hero-slide.is-prev2{
+  opacity:.52!important;z-index:5!important;
+  transform:translate3d(-188%,-43%,-155px) scale(.64) rotateY(14deg)!important
+}
+.country-carousel .hero-slide.is-next2{
+  opacity:.52!important;z-index:5!important;
+  transform:translate3d(88%,-57%,-155px) scale(.64) rotateY(-14deg)!important
+}
+.country-carousel .hero-slide.is-far{opacity:0!important;z-index:1!important}
+.country-carousel .country-title-panel{
+  position:absolute!important;z-index:3!important;left:18px!important;right:18px!important;
+  top:auto!important;bottom:18px!important;transform:none!important;min-height:0!important;
+  padding:13px 16px 14px!important;border:1px solid rgba(247,243,233,.22)!important;
+  border-radius:7px!important;background:rgba(8,18,30,.62)!important;
+  backdrop-filter:blur(8px);display:flex!important;flex-direction:column!important;
+  align-items:flex-start!important;justify-content:center!important;text-align:left!important;
+  color:#F7F3E9!important;opacity:1!important;visibility:visible!important
+}
+.country-carousel .country-title-panel span{
+  margin:0 0 3px!important;color:#E0B93F!important;font-size:.56rem!important;
+  letter-spacing:.18em!important;font-weight:700!important
+}
+.country-carousel .country-title-panel strong{
+  color:#F7F3E9!important;font:500 clamp(1.5rem,2.6vw,2.5rem)/1.05 Georgia,serif!important;
+  letter-spacing:-.025em!important;text-shadow:none!important
+}
+.country-carousel .hero-slide:not(.is-active) .country-title-panel{opacity:0!important;visibility:hidden!important}
+.country-carousel .hero-carousel-controls{z-index:30!important;right:18px!important;bottom:16px!important}
+.country-carousel .floating-stamp{display:none!important}
+@media(max-width:980px){
+ .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:24px!important}
+ .hero-visual.country-carousel{height:500px!important}
+ .country-carousel .hero-slide{width:37%!important;height:66%!important}
+ .country-carousel .hero-slide.is-prev{transform:translate3d(-132%,-46%,-65px) scale(.78) rotateY(8deg)!important}
+ .country-carousel .hero-slide.is-next{transform:translate3d(32%,-54%,-65px) scale(.78) rotateY(-8deg)!important}
+}
+@media(max-width:680px){
+ .hero-grid{grid-template-columns:minmax(0,1fr)!important;gap:24px!important}
+ .hero-visual.country-carousel{height:410px!important;margin:0!important;width:100%!important}
+ .country-carousel .hero-slide{width:42%!important;height:70%!important}
+ .country-carousel .hero-slide.is-prev{transform:translate3d(-132%,-46%,-45px) scale(.78) rotateY(7deg)!important}
+ .country-carousel .hero-slide.is-next{transform:translate3d(32%,-54%,-45px) scale(.78) rotateY(-7deg)!important}
+ .country-carousel .hero-slide.is-prev2{transform:translate3d(-188%,-43%,-110px) scale(.58) rotateY(12deg)!important}
+ .country-carousel .hero-slide.is-next2{transform:translate3d(88%,-57%,-110px) scale(.58) rotateY(-12deg)!important}
+ .country-carousel .country-title-panel{left:9px!important;right:9px!important;bottom:9px!important;padding:9px 11px!important}
+ .country-carousel .country-title-panel strong{font-size:1.55rem!important}
+ .country-carousel .hero-carousel-controls{right:9px!important;bottom:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .country-carousel .hero-slide,.country-carousel .hero-slide .hero-photo{transition:none!important;will-change:auto}
+}
+
 </style>
 </head>
 <body>
