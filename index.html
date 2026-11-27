@@ -432,18 +432,45 @@ header nav>.menu{flex:0 0 auto}
 @media(max-width:980px){.visa-nav .visa-mega{width:min(850px,calc(100vw - 36px));grid-template-columns:repeat(2,minmax(0,1fr))}.visa-mega-feature{grid-column:1/-1}.visa-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.visa-process-strip{gap:14px}.visa-process-strip .btn{margin-left:0}}
 @media(max-width:680px){.visa-nav .visa-mega{width:100%;grid-template-columns:1fr 1fr;padding:14px;gap:12px}.visa-mega>div:not(.visa-mega-feature){padding-right:8px}.visa-mega-feature{grid-column:1/-1}.visa-section-head{grid-template-columns:1fr;gap:15px}.visa-card-grid{grid-template-columns:1fr 1fr;gap:10px}.visa-card{min-height:245px;padding:17px 14px}.visa-card h3{font-size:1.25rem}.visa-process-strip{display:grid;grid-template-columns:1fr 1fr}.visa-process-strip>div{border-right:0;padding-right:0}.visa-process-strip .btn{grid-column:1/-1;justify-self:start}.visa-services-section{padding:62px 0}}
 @media(max-width:420px){.visa-card-grid{grid-template-columns:1fr}.visa-card{min-height:210px}}
+
+/* Visa mega-menu fit and header ordering refinement */
+@media(min-width:981px){
+ body>header .visa-nav{position:static}
+ body>header .visa-nav .visa-mega{
+  left:50%;width:min(1000px,calc(100vw - 64px));
+  grid-template-columns:minmax(0,1fr) minmax(0,1.08fr) minmax(0,1fr) minmax(210px,1.28fr);
+  gap:18px;padding:22px 24px;align-items:stretch;
+ }
+ body>header .visa-mega>div{min-width:0;max-width:100%}
+ body>header .visa-mega h4{font-size:1.12rem;line-height:1.2;overflow-wrap:anywhere}
+ body>header .visa-mega a{font-size:.7rem;line-height:1.45;white-space:normal;overflow-wrap:anywhere;word-break:normal;padding:7px 7px;margin:1px -7px}
+ body>header .visa-mega-feature{min-width:0;width:100%;padding:16px 14px;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+ body>header .visa-mega-feature strong{font-size:1.12rem;line-height:1.25;overflow-wrap:anywhere}
+ body>header .visa-mega-feature p{font-size:.72rem;line-height:1.45;overflow-wrap:anywhere}
+ body>header .visa-mega-feature .visa-mega-cta{white-space:normal;max-width:100%;align-self:stretch;justify-content:space-between}
+}
+@media(min-width:681px) and (max-width:980px){
+ body>header .visa-nav .visa-mega{width:min(760px,calc(100vw - 36px));grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ body>header .visa-mega-feature{grid-column:1/-1;min-width:0}
+}
+@media(max-width:680px){
+ body>header .links.open .visa-nav .visa-mega{grid-template-columns:1fr 1fr;gap:12px;width:100%;min-width:0}
+ body>header .links.open .visa-mega-feature{grid-column:1/-1;min-width:0}
+ body>header .links.open .visa-mega a{white-space:normal;overflow-wrap:anywhere}
+}
+
 </style>
 </head>
 <body>
 <header><div class="wrap"><nav>
 <a class="brand" href="#top"><img src="assets/logo.jpg" alt="DP Travels Solutions logo"><span>DP Travels <small>Solutions · Est. 2004</small></span></a>
 <div class="links" id="links">
-<a href="services/index.html">All services</a><a href="#stamps">Destinations</a><a href="#track">Track file</a><a href="/itinerary/">My Trips <span class="nav-new">Private</span></a><div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Travel Tools</button><div class="mega"><div><h4>Plan your trip</h4><a href="/tools/">Travel Planning Hub</a><a href="/tools/budget-calculator.html">Budget Calculator</a><a href="/tools/travel-calculators.html">Currency & Travel Calculators</a></div><div><h4>Quick calculators</h4><a href="/tools/travel-calculators.html#currencyPanel">Currency Converter</a><a href="/tools/travel-calculators.html#baggagePanel">Baggage Checker</a><a href="/tools/travel-calculators.html#durationPanel">Trip Duration</a><a href="/tools/travel-calculators.html#zonePanel">Time Zone Comparison</a></div></div></div><div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Explore</button><div class="mega"><div><h4>Travel knowledge</h4><a href="/guides/">Knowledge Centre</a><a href="/guides/#visa">Visa Preparation</a><a href="/guides/#documents">Document Preparation</a><a href="/services/faq.html">FAQs</a></div><div><h4>Discover & compare</h4><a href="/explore/">Explore Destinations</a><a href="/services/index.html">Compare Services</a><a href="/#stamps">Destination Collection</a></div></div></div><div class="nav-group visa-nav"><button class="nav-trigger" type="button" aria-expanded="false">Visa Services</button><div class="mega visa-mega">
+<a href="services/index.html">All services</a><div class="nav-group visa-nav"><button class="nav-trigger" type="button" aria-expanded="false">Visa Services</button><div class="mega visa-mega">
 <div class="visa-service-column"><h4>Visa Categories</h4><a href="/visa/tourist-visitor-visa.html">Tourist / Visitor Visa</a><a href="/visa/business-visa.html">Business Visa</a><a href="/visa/student-visa.html">Student Visa</a><a href="/visa/work-employment-visa.html">Work / Employment Visa</a><a href="#inquiry">Talk to a Visa Expert</a></div>
 <div class="visa-service-column"><h4>Documentation &amp; Attestation</h4><a href="services/certificate-attestation.html">Certificate Attestation</a><a href="services/apostille-attestation.html">Apostille Services</a><a href="services/mea-attestation.html">MEA Attestation</a><a href="services/hrd-attestation.html">HRD Attestation</a><a href="services/other-document-attestation.html">Document Preparation</a></div>
 <div class="visa-service-column"><h4>Verification &amp; Embassy</h4><a href="services/verification-services.html">Verification Services</a><a href="services/dataflow-verification.html">DataFlow Verification</a><a href="services/embassy-attestation.html">Embassy Attestation</a><a href="services/mofa-attestation.html">MOFA Attestation</a><a href="services/index.html">Browse all related services ↗</a></div>
 <div class="visa-mega-feature"><span class="eyebrow">DP TRAVEL · VISA ASSISTANCE</span><strong>From your first question to application support.</strong><p>Speak with our team about your destination and travel purpose.</p><a class="visa-mega-cta" href="#inquiry">Talk to a Visa Expert <span>↗</span></a></div>
-</div></div></div>
+</div></div></div><a href="#stamps">Destinations</a><a href="#track">Track file</a><a href="/itinerary/">My Trips <span class="nav-new">Private</span></a><div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Travel Tools</button><div class="mega"><div><h4>Plan your trip</h4><a href="/tools/">Travel Planning Hub</a><a href="/tools/budget-calculator.html">Budget Calculator</a><a href="/tools/travel-calculators.html">Currency & Travel Calculators</a></div><div><h4>Quick calculators</h4><a href="/tools/travel-calculators.html#currencyPanel">Currency Converter</a><a href="/tools/travel-calculators.html#baggagePanel">Baggage Checker</a><a href="/tools/travel-calculators.html#durationPanel">Trip Duration</a><a href="/tools/travel-calculators.html#zonePanel">Time Zone Comparison</a></div></div></div><div class="nav-group"><button class="nav-trigger" type="button" aria-expanded="false">Explore</button><div class="mega"><div><h4>Travel knowledge</h4><a href="/guides/">Knowledge Centre</a><a href="/guides/#visa">Visa Preparation</a><a href="/guides/#documents">Document Preparation</a><a href="/services/faq.html">FAQs</a></div><div><h4>Discover & compare</h4><a href="/explore/">Explore Destinations</a><a href="/services/index.html">Compare Services</a><a href="/#stamps">Destination Collection</a></div></div></div>
 <a class="btn nav-cta" href="#inquiry">Plan your journey <span class="arrow">↗</span></a>
 <button class="menu" id="menu" aria-label="Open navigation" aria-expanded="false">Menu</button>
 </nav></div></header>
