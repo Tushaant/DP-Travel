@@ -596,6 +596,43 @@ header nav > .links > .nav-group > .nav-trigger:after {
   header nav > .links > .nav-group > .nav-trigger {font-size:15px!important}
 }
 
+
+/* Match every primary header item to the My Trips label: same white, 15px DM Sans */
+header nav > .links,
+header nav > .links > a,
+header nav > .links > .nav-group > .nav-trigger,
+header nav > a:not(.brand):not(.nav-cta),
+header nav > .nav-group > .nav-trigger {
+  color:#F7F3E9!important;
+  font-family:var(--sans)!important;
+  font-size:15px!important;
+  font-weight:600!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+  text-transform:none!important;
+}
+header nav > .links {gap:18px}
+header nav > .links > a,
+header nav > .links > .nav-group > .nav-trigger,
+header nav > a:not(.brand):not(.nav-cta),
+header nav > .nav-group > .nav-trigger {
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+}
+header nav > .links > a:hover,
+header nav > .links > .nav-group > .nav-trigger:hover,
+header nav > a:not(.brand):not(.nav-cta):hover,
+header nav > .nav-group > .nav-trigger:hover {color:#D4AF37!important}
+header nav > .nav-cta {color:#0D1B2A!important}
+@media(min-width:681px) and (max-width:1240px) {
+  header nav > .links,
+  header nav > .links > a,
+  header nav > .links > .nav-group > .nav-trigger,
+  header nav > a:not(.brand):not(.nav-cta),
+  header nav > .nav-group > .nav-trigger {font-size:15px!important}
+}
+
 </style>
 </head>
 <body>
