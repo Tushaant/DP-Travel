@@ -930,7 +930,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
     window.setTimeout(()=>{outgoing.classList.remove('is-exit-next','is-exit-prev');animating=false},900);
   }
   function stop(){if(timer){window.clearInterval(timer);timer=null}}
-  function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>goTo(active+1,1),5000)}
+  function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>goTo(active+1,1),1000)}
   prev.addEventListener('click',()=>{goTo(active-1,-1);start()});
   next.addEventListener('click',()=>{goTo(active+1,1);start()});
   dots.forEach((dot,i)=>dot.addEventListener('click',()=>{goTo(i,i>active?1:-1);start()}));
