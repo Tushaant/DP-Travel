@@ -741,6 +741,82 @@ header nav > .nav-cta {color:#0D1B2A!important}
   .hero-photo {width:100%;height:100%;object-fit:cover}
 }
 
+
+/* DP Travel destination collage carousel — preview iteration */
+/* Keep every card on one composited layer; animate transforms and opacity only. */
+.country-carousel{position:relative;overflow:hidden;perspective:1400px;isolation:isolate}
+.country-carousel .hero-slides{position:absolute;inset:0;transform-style:preserve-3d}
+.country-carousel .hero-slide{
+  position:absolute!important;left:50%!important;top:50%!important;right:auto!important;
+  width:43%!important;height:68%!important;margin:0!important;
+  border:1px solid rgba(247,243,233,.24);border-radius:12px;overflow:hidden;
+  opacity:0!important;visibility:visible!important;pointer-events:none!important;
+  transform:translate3d(-50%,-50%,-260px) scale(.52) rotateY(0deg)!important;
+  transform-origin:center center;filter:brightness(.58) saturate(.78)!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.38);backface-visibility:hidden;
+  transition:transform 950ms cubic-bezier(.22,.75,.22,1),opacity 700ms ease,filter 850ms ease,box-shadow 850ms ease!important;
+  will-change:transform,opacity
+}
+.country-carousel .hero-slide .hero-photo{
+  width:100%;height:100%;object-fit:cover;transform:scale(1.055);
+  transition:transform 6s ease!important;will-change:transform
+}
+.country-carousel .hero-slide.is-active{
+  opacity:1!important;z-index:10!important;pointer-events:auto!important;
+  transform:translate3d(-50%,-50%,110px) scale(1) rotateY(0deg)!important;
+  filter:brightness(1) saturate(1)!important;box-shadow:0 30px 80px rgba(0,0,0,.5)
+}
+.country-carousel .hero-slide.is-active .hero-photo{transform:scale(1)}
+.country-carousel .hero-slide.is-prev{
+  opacity:.86!important;z-index:7!important;
+  transform:translate3d(-155%,-46%,-75px) scale(.76) rotateY(13deg)!important
+}
+.country-carousel .hero-slide.is-next{
+  opacity:.86!important;z-index:7!important;
+  transform:translate3d(55%,-54%,-75px) scale(.76) rotateY(-13deg)!important
+}
+.country-carousel .hero-slide.is-prev2{
+  opacity:.42!important;z-index:4!important;
+  transform:translate3d(-225%,-42%,-180px) scale(.58) rotateY(19deg)!important
+}
+.country-carousel .hero-slide.is-next2{
+  opacity:.42!important;z-index:4!important;
+  transform:translate3d(125%,-58%,-180px) scale(.58) rotateY(-19deg)!important
+}
+.country-carousel .hero-slide.is-far{opacity:0!important;z-index:1!important}
+.country-carousel .hero-slide:not(.is-active) .country-title-panel{opacity:0!important;visibility:hidden!important}
+.country-carousel .country-title-panel{
+  left:5%;right:5%;top:auto;bottom:5%;transform:none;min-height:118px;padding:15px 18px;
+  border-radius:8px;background:rgba(255,252,244,.88);backdrop-filter:blur(7px);
+  transition:opacity .35s ease
+}
+.country-carousel .country-title-panel strong{font-size:clamp(2.4rem,5vw,4.8rem)}
+.country-carousel .hero-carousel-controls{z-index:30}
+.country-carousel .floating-stamp{z-index:25}
+@media(max-width:900px){
+ .country-carousel{height:500px}
+ .country-carousel .hero-slide{width:48%!important;height:67%!important}
+ .country-carousel .hero-slide.is-prev{transform:translate3d(-132%,-46%,-75px) scale(.73) rotateY(12deg)!important}
+ .country-carousel .hero-slide.is-next{transform:translate3d(32%,-54%,-75px) scale(.73) rotateY(-12deg)!important}
+ .country-carousel .hero-slide.is-prev2{transform:translate3d(-190%,-42%,-180px) scale(.54) rotateY(17deg)!important}
+ .country-carousel .hero-slide.is-next2{transform:translate3d(90%,-58%,-180px) scale(.54) rotateY(-17deg)!important}
+}
+@media(max-width:680px){
+ .country-carousel{height:390px;margin:0 4px;perspective:900px}
+ .country-carousel .hero-slide{width:66%!important;height:72%!important;border-radius:9px}
+ .country-carousel .hero-slide.is-active{transform:translate3d(-50%,-50%,80px) scale(1)!important}
+ .country-carousel .hero-slide.is-prev{transform:translate3d(-112%,-48%,-65px) scale(.72) rotateY(10deg)!important}
+ .country-carousel .hero-slide.is-next{transform:translate3d(12%,-52%,-65px) scale(.72) rotateY(-10deg)!important}
+ .country-carousel .hero-slide.is-prev2,.country-carousel .hero-slide.is-next2{opacity:0!important;transform:translate3d(-50%,-50%,-200px) scale(.5)!important}
+ .country-carousel .country-title-panel{left:4%;right:4%;bottom:4%;min-height:88px;padding:10px}
+ .country-carousel .country-title-panel strong{font-size:clamp(2rem,10vw,3.2rem)}
+ .country-carousel .hero-carousel-controls{right:12px;bottom:10px}
+ .country-carousel .floating-stamp{width:78px;height:78px;top:10px;left:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .country-carousel .hero-slide,.country-carousel .hero-slide .hero-photo{transition:none!important;will-change:auto}
+}
+
 </style>
 </head>
 <body>
@@ -885,7 +961,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
 (()=>{const groups=[...document.querySelectorAll('.nav-group')];groups.forEach(g=>{const b=g.querySelector('.nav-trigger');b.addEventListener('click',()=>{const open=!g.classList.contains('open');groups.forEach(x=>{x.classList.remove('open');x.querySelector('.nav-trigger').setAttribute('aria-expanded','false')});g.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open))})});document.addEventListener('click',e=>{if(!e.target.closest('.nav-group'))groups.forEach(g=>{g.classList.remove('open');g.querySelector('.nav-trigger').setAttribute('aria-expanded','false')})});})();
 </script>
 <script>
-(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const allSlides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null,startX=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function slides(){return allSlides.filter(s=>!s.hidden)}function show(i){const live=slides();if(!live.length)return;active=(i+live.length)%live.length;live.forEach((s,n)=>{s.classList.toggle('is-active',n===active);s.classList.toggle('is-prev',n===(active-1+live.length)%live.length&&live.length>1);s.classList.toggle('is-next',n===(active+1)%live.length&&live.length>1);s.classList.toggle('is-far',n!==active&&n!==(active-1+live.length)%live.length&&n!==(active+1)%live.length);s.setAttribute('aria-hidden',String(n!==active));});const activeImage=live[active].querySelector('.hero-photo');if(activeImage){const hero=document.querySelector('.hero');hero.style.setProperty('--hero-destination-bg','url("'+activeImage.currentSrc+'")');}dots.forEach((d,n)=>{d.setAttribute('aria-pressed',String(n===active));d.hidden=n>=live.length});}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),4800)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('click',e=>{const card=e.target.closest('.hero-slide.is-prev,.hero-slide.is-next');if(card){show(active+(card.classList.contains('is-next')?1:-1));start()}});root.addEventListener('pointerdown',e=>{startX=e.clientX});root.addEventListener('pointerup',e=>{const dx=e.clientX-startX;if(Math.abs(dx)>45){show(active+(dx<0?1:-1));start()}});root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);show(0);start();})();
+(()=>{const root=document.getElementById('heroCarousel');if(!root)return;const allSlides=[...root.querySelectorAll('.hero-slide')],dots=[...root.querySelectorAll('.hero-dots button')],prev=root.querySelector('.prev'),next=root.querySelector('.next');let active=0,timer=null,startX=0;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;function slides(){return allSlides.filter(s=>!s.hidden)}function show(i){const live=slides();if(!live.length)return;active=(i+live.length)%live.length;live.forEach((s,n)=>{const d=(n-active+live.length)%live.length;const prev=(active-n+live.length)%live.length;s.classList.toggle('is-active',n===active);s.classList.toggle('is-prev',prev===1&&live.length>1);s.classList.toggle('is-next',d===1&&live.length>1);s.classList.toggle('is-prev2',prev===2&&live.length>3);s.classList.toggle('is-next2',d===2&&live.length>3);s.classList.toggle('is-far',n!==active&&d!==1&&prev!==1&&d!==2&&prev!==2);s.setAttribute('aria-hidden',String(n!==active));});const activeImage=live[active].querySelector('.hero-photo');if(activeImage){const hero=document.querySelector('.hero');hero.style.setProperty('--hero-destination-bg','url("'+activeImage.currentSrc+'")');}dots.forEach((d,n)=>{d.setAttribute('aria-pressed',String(n===active));d.hidden=n>=live.length});}function stop(){if(timer)window.clearInterval(timer);timer=null}function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>show(active+1),4800)}prev.addEventListener('click',()=>{show(active-1);start()});next.addEventListener('click',()=>{show(active+1);start()});dots.forEach((d,i)=>d.addEventListener('click',()=>{show(i);start()}));root.addEventListener('click',e=>{const card=e.target.closest('.hero-slide.is-prev,.hero-slide.is-next');if(card){show(active+(card.classList.contains('is-next')?1:-1));start()}});root.addEventListener('pointerdown',e=>{startX=e.clientX});root.addEventListener('pointerup',e=>{const dx=e.clientX-startX;if(Math.abs(dx)>45){show(active+(dx<0?1:-1));start()}});root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);root.addEventListener('focusin',stop);root.addEventListener('focusout',start);document.addEventListener('visibilitychange',start);show(0);start();})();
 (()=>{const cards=[...document.querySelectorAll('.destination')];if(!cards.length)return;if(!('IntersectionObserver'in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){cards.forEach(c=>c.classList.add('stamp-visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('stamp-visible');io.unobserve(e.target)}}),{threshold:.16});cards.forEach(c=>io.observe(c));})();
 </script>
 
