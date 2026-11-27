@@ -7,7 +7,7 @@ module.exports=async(req,res)=>{
   const rows=await sql()`SELECT content FROM dp_site_content WHERE content_key='homepage' LIMIT 1`;
   const content=rows[0]?.content||{};
   const saved=Array.isArray(content.destinations)?content.destinations:[];
-  content.destinations=DESTINATION_DEFAULTS.map(d=>({...d,...(saved.find(x=>x.code===d.code)||{}),image:d.image}));
+  content.destinations=DESTINATION_DEFAULTS.map(d=>({...d,...(saved.find(x=>x.code===d.code)||{})}));
   // Preview-only illustrative cards let reviewers assess the layout before real feedback exists.
   // They are never returned by the production deployment.
   if(process.env.VERCEL_ENV==="preview"&&!(Array.isArray(content.testimonials)&&content.testimonials.some(x=>x.status==="published"))){
