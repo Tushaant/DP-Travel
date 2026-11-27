@@ -757,7 +757,7 @@ function renderTestimonials(cms){
    const builtInDestinations=D.slice();
    const mapped=builtInDestinations.map(base=>{const x=cms.destinations.find(item=>item.code===base.c)||{};return {...base,n:x.name||base.n,short:x.short||base.short,image:base.image,services:x.services||base.services,docs:x.docs||base.docs}});
    D.splice(0,D.length,...mapped);
-   $("#dest").innerHTML='<option value="">Select a destination</option>'+D.map(x=>'<option>'+x.n+'</option>').join("")+'<option>Other country</option>';
+   $("#dest").innerHTML='<option value="">Select a destination</option>'+[...D.map(x=>x.n),...EXTRA_DESTINATIONS].map(name=>'<option>'+name+'</option>').join("")+'<option>Other country</option>';
    $("#rail").innerHTML=D.map((x,i)=>'<button class="destination stamp-visible" type="button" data-i="'+i+'" aria-pressed="'+(i===0)+'"><div class="destination-image"><img src="'+x.image.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'" alt="'+x.n.replace(/"/g,"&quot;")+' destination" loading="eager" decoding="async"><span class="stamp-ring"><span>DP Travel<b>'+x.c+'</b>Collection</span></span></div><div class="destination-copy"><h3>'+x.n+'</h3><p>'+x.short+'</p></div></button>').join("");
    document.querySelectorAll(".destination").forEach(b=>b.addEventListener("click",()=>show(Number(b.dataset.i))));
    document.querySelectorAll(".destination-image img").forEach(img=>{const useFallback=()=>{const fallback=img.dataset.fallback;if(fallback&&img.src!==fallback){img.dataset.fallback="";img.src=fallback}else{img.style.visibility="hidden"}};img.addEventListener("error",useFallback);if(img.complete&&img.naturalWidth===0)useFallback()});
