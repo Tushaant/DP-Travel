@@ -869,9 +869,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
 (()=>{
   const root=document.getElementById('heroCarousel');
   if(!root)return;
-
-  // Add or replace destinations here. Images are preloaded one slide ahead.
-  const destinations=[
+  const fallback=[
     {country:"Nigeria",image:"https://images.pexels.com/photos/32014864/pexels-photo-32014864.jpeg?auto=compress&cs=tinysrgb&w=1800",alt:"Lagos waterfront skyline, Nigeria"},
     {country:"Kenya",image:"https://fi-hatchbox-production-uploads.s3.amazonaws.com/posts/1686177006_pexels-antony-trivet-13348192.jpg",alt:"Nairobi skyline at dusk, Kenya"},
     {country:"Portugal",image:"https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=1800&q=88",alt:"Lisbon cityscape, Portugal"},
@@ -882,65 +880,69 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
     {country:"Canada",image:"https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1800&q=88",alt:"Toronto skyline, Canada"},
     {country:"Japan",image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1800&q=88",alt:"Kyoto streets, Japan"}
   ];
-
-  const track=root.querySelector('.dp-destination-track');
-  const dotsHost=root.querySelector('.hero-dots');
-  const hero=root.closest('.hero');
-  const backdropLayers=[...hero.querySelectorAll('.hero-photo-backdrop-layer')];
-  const prev=root.querySelector('.prev'),next=root.querySelector('.next');
-  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let active=0,timer=null,startX=0,startY=0,animating=false,backdropIndex=0;
-
-  track.innerHTML=destinations.map((d,i)=>`<figure class="dp-destination-card" data-index="${i}" aria-hidden="true">
-    <img src="${d.image}" alt="${d.alt}" ${i===0?'fetchpriority="high"':'loading="lazy"'}>
-    <figcaption class="dp-destination-caption"><span>Discover the world</span><strong>${d.country}</strong></figcaption>
-  </figure>`).join('');
-  dotsHost.innerHTML=destinations.map((d,i)=>`<button type="button" aria-label="Show ${d.country}" aria-pressed="${i===0?'true':'false'}"></button>`).join('');
-  const cards=[...track.children],dots=[...dotsHost.children];
-
-  function preload(index){const img=new Image();img.src=destinations[(index+destinations.length)%destinations.length].image}
-  function setBackdrop(index){
-    const layer=backdropLayers[1-backdropIndex];
-    layer.style.backgroundImage='url("'+destinations[index].image+'")';
-    requestAnimationFrame(()=>{layer.classList.add('is-visible');backdropLayers[backdropIndex].classList.remove('is-visible');backdropIndex=1-backdropIndex});
+  function initialise(destinations){
+    const track=root.querySelector('.dp-destination-track');
+    const dotsHost=root.querySelector('.hero-dots');
+    const hero=root.closest('.hero');
+    const backdropLayers=[...hero.querySelectorAll('.hero-photo-backdrop-layer')];
+    const prev=root.querySelector('.prev'),next=root.querySelector('.next');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let active=0,timer=null,startX=0,startY=0,animating=false,backdropIndex=0;
+    track.innerHTML=destinations.map((d,i)=>`<figure class="dp-destination-card" data-index="${i}" aria-hidden="true">
+      <img src="${d.image}" alt="${d.alt||d.country}" ${i===0?'fetchpriority="high"':'loading="lazy"'}>
+      <figcaption class="dp-destination-caption"><span>Discover the world</span><strong>${d.country}</strong></figcaption>
+    </figure>`).join('');
+    dotsHost.innerHTML=destinations.map((d,i)=>`<button type="button" aria-label="Show ${d.country.replace(/&/g,'and')}" aria-pressed="${i===0?'true':'false'}"></button>`).join('');
+    const cards=[...track.children],dots=[...dotsHost.children];
+    function preload(index){const img=new Image();img.src=destinations[(index+destinations.length)%destinations.length].image}
+    function setBackdrop(index){
+      const layer=backdropLayers[1-backdropIndex];
+      layer.style.backgroundImage='url("'+destinations[index].image+'")';
+      requestAnimationFrame(()=>{layer.classList.add('is-visible');backdropLayers[backdropIndex].classList.remove('is-visible');backdropIndex=1-backdropIndex});
+    }
+    function positionCards(){
+      const count=destinations.length;
+      cards.forEach((card,i)=>{
+        card.classList.remove('is-active','is-preview-one','is-preview-two','is-hidden');
+        const distance=(i-active+count)%count;
+        if(distance===0){card.classList.add('is-active');card.setAttribute('aria-hidden','false')}
+        else if(distance===1){card.classList.add('is-preview-one');card.setAttribute('aria-hidden','true')}
+        else if(distance===2){card.classList.add('is-preview-two');card.setAttribute('aria-hidden','true')}
+        else{card.classList.add('is-hidden');card.setAttribute('aria-hidden','true')}
+      });
+      dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===active)));
+      preload(active+1);
+    }
+    function goTo(index,direction=1){
+      if(animating||destinations.length<2)return;
+      const count=destinations.length,nextIndex=(index+count)%count;
+      if(nextIndex===active)return;
+      animating=true;
+      const outgoing=cards[active];
+      outgoing.classList.add(direction>=0?'is-exit-next':'is-exit-prev');
+      active=nextIndex;setBackdrop(active);positionCards();
+      window.setTimeout(()=>{outgoing.classList.remove('is-exit-next','is-exit-prev');animating=false},900);
+    }
+    function stop(){if(timer){window.clearInterval(timer);timer=null}}
+    function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>goTo(active+1,1),1500)}
+    prev.addEventListener('click',()=>{goTo(active-1,-1);start()});
+    next.addEventListener('click',()=>{goTo(active+1,1);start()});
+    dots.forEach((dot,i)=>dot.addEventListener('click',()=>{goTo(i,i>active?1:-1);start()}));
+    root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
+    root.addEventListener('focusin',stop);root.addEventListener('focusout',start);
+    root.addEventListener('touchstart',e=>{const t=e.changedTouches[0];startX=t.clientX;startY=t.clientY},{passive:true});
+    root.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){goTo(active+(dx<0?1:-1),dx<0?1:-1);start()}},{passive:true});
+    root.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();goTo(active+1,1);start()}else if(e.key==='ArrowLeft'){e.preventDefault();goTo(active-1,-1);start()}});
+    document.addEventListener('visibilitychange',start);
+    setBackdrop(0);positionCards();start();
   }
-  function positionCards(){
-    const count=destinations.length;
-    cards.forEach((card,i)=>{
-      card.classList.remove('is-active','is-preview-one','is-preview-two','is-hidden');
-      const distance=(i-active+count)%count;
-      if(distance===0){card.classList.add('is-active');card.setAttribute('aria-hidden','false')}
-      else if(distance===1){card.classList.add('is-preview-one');card.setAttribute('aria-hidden','true')}
-      else if(distance===2){card.classList.add('is-preview-two');card.setAttribute('aria-hidden','true')}
-      else{card.classList.add('is-hidden');card.setAttribute('aria-hidden','true')}
-    });
-    dots.forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===active)));
-    preload(active+1);
-  }
-  function goTo(index,direction=1){
-    if(animating||destinations.length<2)return;
-    const count=destinations.length,nextIndex=(index+count)%count;
-    if(nextIndex===active)return;
-    animating=true;
-    const outgoing=cards[active];
-    outgoing.classList.add(direction>=0?'is-exit-next':'is-exit-prev');
-    active=nextIndex;
-    setBackdrop(active);
-    positionCards();
-    window.setTimeout(()=>{outgoing.classList.remove('is-exit-next','is-exit-prev');animating=false},900);
-  }
-  function stop(){if(timer){window.clearInterval(timer);timer=null}}
-  function start(){stop();if(!reduced&&!document.hidden&&!root.matches(':hover')&&!root.contains(document.activeElement))timer=window.setInterval(()=>goTo(active+1,1),1500)}
-  prev.addEventListener('click',()=>{goTo(active-1,-1);start()});
-  next.addEventListener('click',()=>{goTo(active+1,1);start()});
-  dots.forEach((dot,i)=>dot.addEventListener('click',()=>{goTo(i,i>active?1:-1);start()}));
-  root.addEventListener('mouseenter',stop);root.addEventListener('mouseleave',start);
-  root.addEventListener('focusin',stop);root.addEventListener('focusout',start);
-  root.addEventListener('touchstart',e=>{const t=e.changedTouches[0];startX=t.clientX;startY=t.clientY},{passive:true});
-  root.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-startX,dy=t.clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){goTo(active+(dx<0?1:-1),dx<0?1:-1);start()}},{passive:true});
-  root.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();goTo(active+1,1);start()}else if(e.key==='ArrowLeft'){e.preventDefault();goTo(active-1,-1);start()}});
-  document.addEventListener('visibilitychange',start);
-  setBackdrop(0);positionCards();start();
+  // CMS heroSlides are the source of truth. Use the built-in list only if the
+  // public content endpoint is unavailable or has no valid published slides.
+  fetch('/api/content',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(new Error('CMS content unavailable'))).then(data=>{
+    const slides=Array.isArray(data?.content?.heroSlides)?data.content.heroSlides:[];
+    const cmsSlides=slides.filter(x=>x&&typeof x.title==='string'&&x.title.trim()&&typeof x.image==='string'&&/^https:\/\//i.test(x.image.trim())).map(x=>({country:x.title.trim(),image:x.image.trim(),alt:(x.alt||x.title).trim()}));
+    initialise(cmsSlides.length?cmsSlides:fallback);
+  }).catch(()=>initialise(fallback));
 })();
 (()=>{const cards=[...document.querySelectorAll('.destination')];if(!cards.length)return;if(!('IntersectionObserver'in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){cards.forEach(c=>c.classList.add('stamp-visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('stamp-visible');io.unobserve(e.target)}}),{threshold:.16});cards.forEach(c=>io.observe(c));})();
 </script>

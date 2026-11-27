@@ -10,7 +10,7 @@ module.exports=async(req,res)=>{
    const rows=await db`SELECT content,updated_at FROM dp_site_content WHERE content_key='homepage' LIMIT 1`;
    const content=rows[0]?.content||{heroSlides:[],destinations:[]};
    const saved=Array.isArray(content.destinations)?content.destinations:[];
-   content.destinations=DESTINATION_DEFAULTS.map(d=>({...d,...(saved.find(x=>x.code===d.code)||{}),image:d.image}));
+   content.destinations=DESTINATION_DEFAULTS.map(d=>({...d,...(saved.find(x=>x.code===d.code)||{})}));
    return json(res,200,{content,updated_at:rows[0]?.updated_at||null});
   }
   if(req.method!=="PUT")return json(res,405,{error:"Method not allowed"});
