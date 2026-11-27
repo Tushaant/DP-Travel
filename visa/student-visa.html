@@ -5,9 +5,9 @@
 
 /* Explicit image layer: avoids background-image overrides on the hero */
 .hero{position:relative!important;isolation:isolate;overflow:hidden;background-image:none!important;background-color:#091625!important}
-.hero .visa-hero-image{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center 48%;z-index:-2}
-.hero:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(9,22,37,.88) 0%,rgba(9,22,37,.74) 42%,rgba(9,22,37,.40) 74%,rgba(9,22,37,.30) 100%),linear-gradient(0deg,rgba(9,22,37,.25),rgba(9,22,37,.08))}
-.hero .wrap{position:relative;z-index:1}
+.hero .visa-hero-image{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center 48%;z-index:0}
+.hero:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(9,22,37,.88) 0%,rgba(9,22,37,.74) 42%,rgba(9,22,37,.40) 74%,rgba(9,22,37,.30) 100%),linear-gradient(0deg,rgba(9,22,37,.25),rgba(9,22,37,.08))}
+.hero .wrap{position:relative;z-index:2}
 .hero h1,.hero p{position:relative}
 @media(max-width:760px){.hero .visa-hero-image{object-position:58% center}.hero:after{background:linear-gradient(90deg,rgba(9,22,37,.86),rgba(9,22,37,.55)),linear-gradient(0deg,rgba(9,22,37,.32),rgba(9,22,37,.08))}}
 
