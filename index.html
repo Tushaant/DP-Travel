@@ -683,6 +683,9 @@ header nav > .nav-cta {color:#0D1B2A!important}
 .dp-destination-card.is-exit-next{z-index:6;opacity:0;transform:translate3d(-22%,-50%,0) scale(.88);filter:brightness(.45)}
 .dp-destination-card.is-exit-prev{z-index:6;opacity:0;transform:translate3d(22%,-50%,0) scale(.88);filter:brightness(.45)}
 .dp-destination-card.is-hidden{z-index:0;opacity:0;transform:translate3d(175%,-30%,0) scale(.7);filter:brightness(.3)}
+.dp-destination-card.is-exit-next,.dp-destination-card.is-exit-prev{z-index:8!important;opacity:0!important;pointer-events:none!important}
+.dp-destination-card.is-exit-next{transform:translate3d(-22%,-50%,0) scale(.88)!important}
+.dp-destination-card.is-exit-prev{transform:translate3d(22%,-50%,0) scale(.88)!important}
 .dp-destination-caption{position:absolute;z-index:2;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:74px 25px 25px;color:#F7F3E9;opacity:0;transform:translate3d(0,18px,0);transition:opacity 480ms ease 120ms,transform 560ms var(--dp-ease) 100ms}
 .dp-destination-card.is-active .dp-destination-caption{opacity:1;transform:translate3d(0,0,0)}
 .dp-destination-caption span{color:var(--dp-gold);font:700 .62rem/1.2 var(--sans);letter-spacing:.19em;text-transform:uppercase}
@@ -741,7 +744,7 @@ header nav > .nav-cta {color:#0D1B2A!important}
 <main id="top">
 <section class="hero"><div class="hero-photo-backdrop" aria-hidden="true"><div class="hero-photo-backdrop-layer is-visible"></div><div class="hero-photo-backdrop-layer"></div></div><div class="wrap hero-grid">
 <div class="hero-copy"><div class="eyebrow">The art of going places · Since 2004</div><h1>Your Visa Journey, <em>Guided by Experts.</em></h1><p>From understanding visa requirements to application guidance, documentation and process support, DP Travel helps make your international journey clearer and simpler.</p><div class="actions"><a class="btn" href="#visa-services">Explore Visa Services <span class="arrow">↗</span></a><a class="btn light" href="#inquiry">Talk to a Visa Expert</a></div><div class="hero-note">Trusted since 2004 · 22 years of expertise</div></div>
-<div class="hero-visual hero-carousel country-carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Featured country destinations">
+<div class="hero-visual hero-carousel country-carousel" id="heroCarousel" tabindex="0" aria-roledescription="carousel" aria-label="Featured country destinations">
   <div class="dp-destination-track" aria-live="off"></div>
   <div class="hero-carousel-controls" aria-label="Destination carousel controls">
     <button type="button" class="hero-arrow prev" aria-label="Previous destination">←</button>
@@ -871,7 +874,7 @@ $("#menu").addEventListener("click",function(){const open=$("#links").classList.
     {country:"United Arab Emirates",image:"https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1800&q=88",alt:"Dubai skyline, United Arab Emirates"},
     {country:"United Kingdom",image:"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1800&q=88",alt:"London skyline, United Kingdom"},
     {country:"Switzerland",image:"https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1800&q=88",alt:"Swiss alpine landscape, Switzerland"},
-    {country:"United States",image:"https://images.unsplash.com/photo-1496442226666-8d4d0e62e9",alt:"New York skyline, United States"},
+    {country:"United States",image:"https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1800&q=88",alt:"New York skyline, United States"},
     {country:"Canada",image:"https://images.unsplash.com/photo-1517935706615-2717063c2225?auto=format&fit=crop&w=1800&q=88",alt:"Toronto skyline, Canada"},
     {country:"Japan",image:"https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1800&q=88",alt:"Kyoto streets, Japan"}
   ];
